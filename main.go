@@ -23,6 +23,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"cloud.google.com/go/pubsub"
 	eh "go-sample-skill/handler"
@@ -81,8 +82,9 @@ func main() {
 
 // Function to handle all incoming events
 func handler(w http.ResponseWriter, r *http.Request) {
-	var env MessageEnvelope
+	start := time.Now().UnixMilli()
 
+	var env MessageEnvelope
 	err := json.NewDecoder(r.Body).Decode(&env)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -90,13 +92,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data, _ := base64.StdEncoding.DecodeString(env.Message.Data)
-
 	var event EventIncoming
 	err = json.Unmarshal(data, &event)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	logger, client := eh.InitLogging(event.WorkspaceId, event.CorrelationId, env.Message.MessageId, event.Skill)
+	defer client.Close()
+
+	logger.Println("Cloud Run execution started")
 
 	if handle, ok := HandlerRegistry[event.Subscription.Name]; ok {
 		log.Printf("Invoking event handler '%s'", event.Subscription.Name)
@@ -141,4 +147,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Event handler '%s' not found", event.Subscription.Name)
 		w.WriteHeader(404)
 	}
+	logger.Println("Cloud Run execution took %d ms, finished with status: 'ok'", time.Now().UnixMilli()-start)
 }

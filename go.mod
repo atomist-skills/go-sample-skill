@@ -2,7 +2,10 @@ module go-sample-skill
 
 go 1.18
 
-require cloud.google.com/go/pubsub v1.21.1
+require (
+	cloud.google.com/go/logging v1.4.2
+	cloud.google.com/go/pubsub v1.21.1
+)
 
 require (
 	cloud.google.com/go v0.100.2 // indirect
