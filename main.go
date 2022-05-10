@@ -63,6 +63,7 @@ var HandlerRegistry = map[string]EventHandler{
 	"on_push": eh.PrintCommit,
 }
 
+// Main entry point into the Cloud Run execution
 func main() {
 	log.Print("Starting server...")
 	http.HandleFunc("/", handler)
@@ -78,6 +79,7 @@ func main() {
 	}
 }
 
+// Function to handle all incoming events
 func handler(w http.ResponseWriter, r *http.Request) {
 	var env MessageEnvelope
 
