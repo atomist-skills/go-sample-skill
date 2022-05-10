@@ -147,5 +147,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Event handler '%s' not found", event.Subscription.Name)
 		w.WriteHeader(404)
 	}
-	logger.Println("Cloud Run execution took %d ms, finished with status: 'ok'", time.Now().UnixMilli()-start)
+	logger.Printf("Cloud Run execution took %d ms, finished with status: 'ok'", time.Now().UnixMilli()-start)
 }
