@@ -18,6 +18,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 )
 
@@ -44,13 +45,6 @@ type GitCommit struct {
 	Repo    GitRepo         `json:"git.commit/repo"`
 }
 
-func Decode[P interface{}](event map[string]json.RawMessage) P {
-	jsonbody, _ := json.Marshal(event)
-	var decoded P
-	json.Unmarshal(jsonbody, &decoded)
-	return decoded
-}
-
 func PrintCommit(event [][]map[string]json.RawMessage) Status {
 
 	for _, e := range event {
@@ -60,6 +54,6 @@ func PrintCommit(event [][]map[string]json.RawMessage) Status {
 
 	return Status{
 		Code:   0,
-		Reason: "Successfully invoked scan_image",
+		Reason: fmt.Sprintf("Successfully printed %d commits", len(event)),
 	}
 }
