@@ -11,7 +11,7 @@ COPY . ./
 
 RUN go build
 
-FROM golang:1.18-alpine
+FROM golang:1.18-alpine@sha256:42d35674864fbb577594b60b84ddfba1be52b4d4298c961b46ba95e9fb4712e8
 
 WORKDIR /skill
 
