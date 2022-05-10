@@ -83,6 +83,7 @@ func main() {
 // Function to handle all incoming events
 func handler(w http.ResponseWriter, r *http.Request) {
 	start := time.Now().UnixMilli()
+	traceId := r.Header.Get("x-cloud-trace-context")
 
 	var env MessageEnvelope
 	err := json.NewDecoder(r.Body).Decode(&env)
@@ -99,7 +100,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger, client := eh.InitLogging(event.WorkspaceId, event.CorrelationId, env.Message.MessageId, event.Skill)
+	logger, client := eh.InitLogging(event.WorkspaceId, event.CorrelationId, env.Message.MessageId, traceId, event.Subscription.Name, event.Skill)
 	defer client.Close()
 
 	logger.Println("Cloud Run execution started")

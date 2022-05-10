@@ -22,7 +22,7 @@ import (
 	"log"
 )
 
-func InitLogging(workspaceId string, correlationId string, messageId string, skill Skill) (*log.Logger, *logging.Client) {
+func InitLogging(workspaceId string, correlationId string, messageId string, traceId string, name string, skill Skill) (*log.Logger, *logging.Client) {
 	ctx := context.Background()
 
 	client, err := logging.NewClient(ctx, "atomist-skill-production")
@@ -35,6 +35,8 @@ func InitLogging(workspaceId string, correlationId string, messageId string, ski
 		"correlation_id":  correlationId,
 		"workspace_id":    workspaceId,
 		"event_id":        messageId,
+		"trace_id":        traceId,
+		"name":            name,
 		"skill_id":        skill.Id,
 		"skill_namespace": skill.Namespace,
 		"skill_name":      skill.Name,
