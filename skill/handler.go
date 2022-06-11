@@ -14,29 +14,28 @@
  * limitations under the License.
  */
 
-package handler
+package skill
 
-type Skill struct {
-	Id        string `json:"id"`
-	Namespace string `json:"namespace"`
-	Name      string `json:"name"`
-	Version   string `json:"version"`
+import (
+	"encoding/json"
+)
+
+// Decode an incoming subscription payload into the concrete
+// mapping type
+func Decode[P interface{}](event map[string]json.RawMessage) P {
+	jsonbody, _ := json.Marshal(event)
+	var decoded P
+	json.Unmarshal(jsonbody, &decoded)
+	return decoded
 }
 
-type Status struct {
-	Code       int8   `json:"code"`
-	Reason     string `json:"reason"`
-	Visibility string `json:"visibility,omitempty"`
-}
-
-type Team struct {
-	Id string `json:"id"`
-}
-
-type StatusHandlerResponse struct {
-	ApiVersion    string `json:"api_version"`
-	CorrelationId string `json:"correlation_id"`
-	Team          Team   `json:"team"`
-	Status        Status `json:"status"`
-	Skill         Skill  `json:"skill"`
+func DecodedEventHandler[P interface{}](delegate func(payload P) Status) EventHandler {
+	return func(ctx EventContext) Status {
+		var status Status
+		for _, e := range ctx.Data {
+			decodedEvent := Decode[P](e[0])
+			status = delegate(decodedEvent)
+		}
+		return status
+	}
 }

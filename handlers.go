@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package handler
+package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
+	"go-sample-skill/skill"
 )
 
 type GitCommitAuthor struct {
@@ -45,15 +44,15 @@ type GitCommit struct {
 	Repo    GitRepo         `json:"git.commit/repo"`
 }
 
-func PrintCommit(event [][]map[string]json.RawMessage) Status {
+func PrintCommit(ctx skill.EventContext) skill.Status {
 
-	for _, e := range event {
-		commit := Decode[GitCommit](e[0])
-		log.Printf("Seen commit %s %s", commit.Sha, commit.Message)
+	for _, e := range ctx.Data {
+		commit := skill.Decode[GitCommit](e[0])
+		ctx.Log.Printf("Seen commit %s %s", commit.Sha, commit.Message)
 	}
 
-	return Status{
+	return skill.Status{
 		Code:   0,
-		Reason: fmt.Sprintf("Successfully printed %d commits", len(event)),
+		Reason: fmt.Sprintf("Successfully printed %d commits", len(ctx.Data)),
 	}
 }
