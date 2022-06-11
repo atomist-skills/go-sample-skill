@@ -18,7 +18,7 @@ package main
 
 import (
 	"fmt"
-	"go-sample-skill/skill"
+	"github.com/atomist-skills/go-skill/skill"
 )
 
 type GitCommitAuthor struct {
