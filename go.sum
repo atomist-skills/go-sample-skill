@@ -72,6 +72,16 @@ github.com/atomist-skills/go-skill v0.0.0-20220611103402-34388e10edbd h1:u3JteAN
 github.com/atomist-skills/go-skill v0.0.0-20220611103402-34388e10edbd/go.mod h1:9t0iJngI9jpwWt81zDNUnYa2ZzWjW6MgXUXMQgGdMwk=
 github.com/atomist-skills/go-skill v0.0.0-20220611103843-52ed649d4c72 h1:EnyvSTxhUeYyu11Ingr5XGEP+7G8Y6B5jq2zCfVAIkI=
 github.com/atomist-skills/go-skill v0.0.0-20220611103843-52ed649d4c72/go.mod h1:9t0iJngI9jpwWt81zDNUnYa2ZzWjW6MgXUXMQgGdMwk=
+github.com/atomist-skills/go-skill v0.0.0-20220611164535-9fd1d291ae27 h1:Lu6cvUySrU9rOEgIGeVgAaWgZaLtBa7nHGCJxILuAgo=
+github.com/atomist-skills/go-skill v0.0.0-20220611164535-9fd1d291ae27/go.mod h1:8GWTFkZoG+ngFSQlbzpOq0cJw9VgVwj/S1YJwSvh1zk=
+github.com/atomist-skills/go-skill v0.0.0-20220612095010-a2aeed223f22 h1:PeWdnL/qYSaQ08AM7VybtxC6Dvx2iWcaH5RJT0QQbhQ=
+github.com/atomist-skills/go-skill v0.0.0-20220612095010-a2aeed223f22/go.mod h1:sNd9G1vvg/Pld1pdIp2fJBg1Cq2UATpsmaUOEFtaAU4=
+github.com/atomist-skills/go-skill v0.0.0-20220612095841-d0d422aed5dd h1:Wi+2Rm6lj1X67Wv54fVjLRWOmM/edTURjKdPA2KsWBs=
+github.com/atomist-skills/go-skill v0.0.0-20220612095841-d0d422aed5dd/go.mod h1:sNd9G1vvg/Pld1pdIp2fJBg1Cq2UATpsmaUOEFtaAU4=
+github.com/atomist-skills/go-skill v0.0.0-20220612101111-7ae596463e8e h1:0Xf2XYS69yoMgg1dPL6VPc2AJfNZLNs1GL3yKreHXd0=
+github.com/atomist-skills/go-skill v0.0.0-20220612101111-7ae596463e8e/go.mod h1:sNd9G1vvg/Pld1pdIp2fJBg1Cq2UATpsmaUOEFtaAU4=
+github.com/atomist-skills/go-skill v0.0.0-20220612101631-51f3747dba4d h1:5tzk/+Y2UAub0ri2DjkjfNg65wMO0OmIcLq/61fezng=
+github.com/atomist-skills/go-skill v0.0.0-20220612101631-51f3747dba4d/go.mod h1:sNd9G1vvg/Pld1pdIp2fJBg1Cq2UATpsmaUOEFtaAU4=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=
 github.com/cespare/xxhash/v2 v2.1.1/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
@@ -664,6 +674,8 @@ honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc/go.mod h1:rf3lG4BRIbNafJWh
 honnef.co/go/tools v0.0.1-2019.2.3/go.mod h1:a3bituU0lyd329TUQxRnasdCoJDkEUEAqEt0JzvZhAg=
 honnef.co/go/tools v0.0.1-2020.1.3/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9vFzvIQ3k=
 honnef.co/go/tools v0.0.1-2020.1.4/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9vFzvIQ3k=
+olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 h1:slmdOY3vp8a7KQbHkL+FLbvbkgMqmXojpFUO/jENuqQ=
+olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3/go.mod h1:oVgVk4OWVDi43qWBEyGhXgYxt7+ED4iYNpTngSLX2Iw=
 rsc.io/binaryregexp v0.2.0/go.mod h1:qTv7/COck+e2FymRvadv62gMdZztPaShugOCi3I+8D8=
 rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
 rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=

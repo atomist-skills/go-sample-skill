@@ -16,7 +16,7 @@
 
 package main
 
-import "github.com/atomist-skills/go-skill/skill"
+import "github.com/atomist-skills/go-skill"
 
 func main() {
 	skill.Handle(skill.Handlers{

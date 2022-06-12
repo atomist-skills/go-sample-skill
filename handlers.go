@@ -18,7 +18,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/atomist-skills/go-skill/skill"
+	"github.com/atomist-skills/go-skill"
+	"olympos.io/encoding/edn"
 )
 
 type GitCommitAuthor struct {
@@ -44,15 +45,30 @@ type GitCommit struct {
 	Repo    GitRepo         `json:"git.commit/repo"`
 }
 
+type GitCommitMarker struct {
+	EntityType edn.Keyword `edn:"schema/entity-type"`
+	Marker     string      `edn:"git.commit/marker"`
+}
+
 func PrintCommit(ctx skill.EventContext) skill.Status {
 
-	for _, e := range ctx.Data {
+	for _, e := range ctx.Event.Subscription.Result {
 		commit := skill.Decode[GitCommit](e[0])
 		ctx.Log.Printf("Seen commit %s %s", commit.Sha, commit.Message)
 	}
 
+	/*entities := []GitCommitMarker{{
+		EntityType: "git/commit",
+		Marker:     "test",
+	}}
+	s := make([]interface{}, len(entities))
+	for i, v := range entities {
+		s[i] = v
+	}
+	ctx.Transact(s)*/
+
 	return skill.Status{
 		Code:   0,
-		Reason: fmt.Sprintf("Successfully printed %d commits", len(ctx.Data)),
+		Reason: fmt.Sprintf("Successfully printed %d commits", len(ctx.Event.Subscription.Result)),
 	}
 }

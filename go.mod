@@ -2,7 +2,7 @@ module go-sample-skill
 
 go 1.18
 
-require github.com/atomist-skills/go-skill v0.0.0-20220611103843-52ed649d4c72
+require github.com/atomist-skills/go-skill v0.0.0-20220612101631-51f3747dba4d
 
 require (
 	cloud.google.com/go v0.102.0 // indirect
@@ -25,4 +25,5 @@ require (
 	google.golang.org/genproto v0.0.0-20220608133413-ed9918b62aac // indirect
 	google.golang.org/grpc v1.47.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
+	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
 )
