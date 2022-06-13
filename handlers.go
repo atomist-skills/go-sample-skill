@@ -86,7 +86,7 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 
 		gctx := context.Background()
 		ts := oauth2.StaticTokenSource(
-			&oauth2.Token{AccessToken: "... your access token ..."},
+			&oauth2.Token{AccessToken: commit.Repo.Org.InstallationToken},
 		)
 		tc := oauth2.NewClient(gctx, ts)
 		client := github.NewClient(tc)
