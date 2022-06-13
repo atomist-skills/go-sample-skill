@@ -107,7 +107,7 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 			verified = NotVerified
 		}
 
-		ctx.Transact([]any{GitRepoEntity{
+		err = ctx.Transact([]any{GitRepoEntity{
 			EntityType: "git/repo",
 			Entity:     "$repo",
 			SourceId:   commit.Repo.SourceId,
@@ -119,17 +119,25 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 			Repo:       "$repo",
 			Url:        commit.Repo.Org.Url,
 		}, GitCommitSignatureEntity{
-			Commit:    "$commit",
-			Signature: *gitCommit.Commit.Verification.Signature,
-			Verified:  verified,
-			Reason:    *gitCommit.Commit.Verification.Reason,
+			EntityType: "git.commit/signature",
+			Commit:     "$commit",
+			Signature:  *gitCommit.Commit.Verification.Signature,
+			Verified:   verified,
+			Reason:     *gitCommit.Commit.Verification.Reason,
 		}})
+		if err != nil {
+			fmt.Println(err)
+			return skill.Status{
+				Code:   1,
+				Reason: fmt.Sprintf("Failed to transact entities"),
+			}
+		}
 
 		ctx.Log.Printf("Transacted commit signature for %s", commit.Sha)
 	}
 
 	return skill.Status{
 		Code:   0,
-		Reason: fmt.Sprintf("Successfully printed %d commits", len(ctx.Event.Subscription.Result)),
+		Reason: fmt.Sprintf("Successfully transacted commit signature for %d commits", len(ctx.Event.Subscription.Result)),
 	}
 }
