@@ -3,7 +3,7 @@ module go-sample-skill
 go 1.18
 
 require (
-	github.com/atomist-skills/go-skill v0.0.0-20220612102819-3fead61f6e37
+	github.com/atomist-skills/go-skill v0.0.0-20220613111647-99edbf33d7a6
 	github.com/google/go-github/v45 v45.1.0
 	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3
 )

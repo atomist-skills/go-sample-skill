@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"github.com/atomist-skills/go-skill"
 	"github.com/google/go-github/v45/github"
+	"golang.org/x/oauth2"
 	"olympos.io/encoding/edn"
 )
 
@@ -83,8 +84,14 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 	for _, e := range ctx.Event.Subscription.Result {
 		commit := skill.Decode[GitCommit](e[0])
 
-		client := github.NewClient(nil)
-		gitCommit, _, err := client.Repositories.GetCommit(context.Background(), commit.Repo.Org.Name, commit.Repo.Name, commit.Sha, nil)
+		gctx := context.Background()
+		ts := oauth2.StaticTokenSource(
+			&oauth2.Token{AccessToken: "... your access token ..."},
+		)
+		tc := oauth2.NewClient(gctx, ts)
+		client := github.NewClient(tc)
+
+		gitCommit, _, err := client.Repositories.GetCommit(gctx, commit.Repo.Org.Name, commit.Repo.Name, commit.Sha, nil)
 		if err != nil {
 			fmt.Println(err)
 			return skill.Status{
