@@ -78,7 +78,7 @@ const (
 	NotVerified             = "git.commit.signature/NOT_VERIFIED"
 )
 
-func PrintCommit(ctx skill.EventContext) skill.Status {
+func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 
 	for _, e := range ctx.Event.Subscription.Result {
 		commit := skill.Decode[GitCommit](e[0])

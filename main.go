@@ -20,7 +20,6 @@ import "github.com/atomist-skills/go-skill"
 
 func main() {
 	skill.Handle(skill.Handlers{
-		"on_push":    PrintCommit,
-		"scan_image": PrintCommit,
+		"on_push": TransactCommitSignature,
 	})
 }
