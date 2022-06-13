@@ -33,7 +33,7 @@ type GitCommitAuthor struct {
 type GitOrg struct {
 	Name              string `json:"git.org/name"`
 	InstallationToken string `json:"github.org/installation-token"`
-	Url               string `json:":git.provider/url"`
+	Url               string `json:"git.provider/url"`
 }
 
 type GitRepo struct {
@@ -67,11 +67,11 @@ type GitCommitEntity struct {
 
 type GitCommitSignatureEntity struct {
 	EntityType edn.Keyword `edn:"schema/entity-type"`
-	Entity     string      `edn:"schema/entity"`
+	Entity     string      `edn:"schema/entity,omitempty"`
 	Commit     string      `edn:"git.commit.signature/commit"`
-	Signature  string      `edn:"git.commit.signature/signature"`
-	Reason     string      `edn:"git.commit.signature/reason"`
-	Verified   edn.Keyword `edn:"git.commit.signature/verified"`
+	Signature  string      `edn:"git.commit.signature/signature,omitempty"`
+	Reason     string      `edn:"git.commit.signature/reason,omitempty"`
+	Verified   edn.Keyword `edn:"git.commit.signature/verified,omitempty"`
 }
 
 const (
