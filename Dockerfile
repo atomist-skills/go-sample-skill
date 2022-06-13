@@ -1,7 +1,7 @@
 # build stage
 FROM golang:1.18-alpine@sha256:7cc62574fcf9c5fb87ad42a9789d5539a6a085971d58ee75dd2ee146cb8a8695 as build
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git build-base
 
 WORKDIR /app
 
@@ -12,6 +12,7 @@ RUN go mod download
 
 COPY . ./
 
+RUN go test
 RUN go build
 
 # runtime stage

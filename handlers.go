@@ -85,49 +85,13 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 
 	for _, e := range ctx.Event.Subscription.Result {
 		commit := skill.Decode[GitCommit](e[0])
-		gitCommit, err := GetCommit(ctx, &commit)
+		err := ProcessCommit(ctx, commit)
 		if err != nil {
-			fmt.Println(err)
 			return skill.Status{
 				Code:   1,
-				Reason: fmt.Sprintf("Failed to obtain commit for %s", commit.Sha),
+				Reason: fmt.Sprintf("Failed to transact signature for %s", commit.Sha),
 			}
 		}
-
-		var verified edn.Keyword
-		if *gitCommit.Commit.Verification.Verified {
-			verified = Verified
-		} else {
-			verified = NotVerified
-		}
-
-		err = ctx.Transact([]any{GitRepoEntity{
-			EntityType: "git/repo",
-			Entity:     "$repo",
-			SourceId:   commit.Repo.SourceId,
-			Url:        commit.Repo.Org.Url,
-		}, GitCommitEntity{
-			EntityType: "git/commit",
-			Entity:     "$commit",
-			Sha:        commit.Sha,
-			Repo:       "$repo",
-			Url:        commit.Repo.Org.Url,
-		}, GitCommitSignatureEntity{
-			EntityType: "git.commit/signature",
-			Commit:     "$commit",
-			Signature:  *gitCommit.Commit.Verification.Signature,
-			Status:     verified,
-			Reason:     *gitCommit.Commit.Verification.Reason,
-		}})
-		if err != nil {
-			fmt.Println(err)
-			return skill.Status{
-				Code:   1,
-				Reason: fmt.Sprintf("Failed to transact entities"),
-			}
-		}
-
-		ctx.Log.Printf("Transacted commit signature for %s", commit.Sha)
 	}
 
 	return skill.Status{
@@ -136,13 +100,58 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 	}
 }
 
+func ProcessCommit(ctx skill.EventContext, commit GitCommit) error {
+	gitCommit, err := GetCommit(ctx, &commit)
+	if err != nil {
+		return err
+	}
+
+	var verified edn.Keyword
+	if *gitCommit.Commit.Verification.Verified {
+		verified = Verified
+	} else {
+		verified = NotVerified
+	}
+
+	err = ctx.Transact([]any{GitRepoEntity{
+		EntityType: "git/repo",
+		Entity:     "$repo",
+		SourceId:   commit.Repo.SourceId,
+		Url:        commit.Repo.Org.Url,
+	}, GitCommitEntity{
+		EntityType: "git/commit",
+		Entity:     "$commit",
+		Sha:        commit.Sha,
+		Repo:       "$repo",
+		Url:        commit.Repo.Org.Url,
+	}, GitCommitSignatureEntity{
+		EntityType: "git.commit/signature",
+		Commit:     "$commit",
+		Signature:  *gitCommit.Commit.Verification.Signature,
+		Status:     verified,
+		Reason:     *gitCommit.Commit.Verification.Reason,
+	}})
+	if err != nil {
+		return err
+	}
+
+	ctx.Log.Printf("Transacted commit signature for %s", commit.Sha)
+	return err
+}
+
 // Obtain commit information from GitHub
 func GetCommit(ctx skill.EventContext, commit *GitCommit) (*github.RepositoryCommit, error) {
-	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: commit.Repo.Org.InstallationToken},
-	)
-	tc := oauth2.NewClient(ctx.Context, ts)
-	client := github.NewClient(tc)
+	var client *github.Client
+
+	if commit.Repo.Org.InstallationToken != "" {
+		ts := oauth2.StaticTokenSource(
+			&oauth2.Token{AccessToken: commit.Repo.Org.InstallationToken},
+		)
+		tc := oauth2.NewClient(ctx.Context, ts)
+		client = github.NewClient(tc)
+	} else {
+		client = github.NewClient(nil)
+	}
 
 	gitCommit, _, err := client.Repositories.GetCommit(ctx.Context, commit.Repo.Org.Name, commit.Repo.Name, commit.Sha, nil)
 	if err != nil {
