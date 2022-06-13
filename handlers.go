@@ -17,7 +17,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"github.com/atomist-skills/go-skill"
 	"github.com/google/go-github/v45/github"
@@ -86,7 +85,7 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 
 	for _, e := range ctx.Event.Subscription.Result {
 		commit := skill.Decode[GitCommit](e[0])
-		gitCommit, err := GetCommit(&commit)
+		gitCommit, err := GetCommit(ctx, &commit)
 		if err != nil {
 			fmt.Println(err)
 			return skill.Status{
@@ -133,20 +132,19 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 
 	return skill.Status{
 		Code:   0,
-		Reason: fmt.Sprintf("Successfully transacted commit signature for %d commits", len(ctx.Event.Subscription.Result)),
+		Reason: fmt.Sprintf("Successfully transacted commit signature for %d commit", len(ctx.Event.Subscription.Result)),
 	}
 }
 
 // Obtain commit information from GitHub
-func GetCommit(commit *GitCommit) (*github.RepositoryCommit, error) {
-	gctx := context.Background()
+func GetCommit(ctx skill.EventContext, commit *GitCommit) (*github.RepositoryCommit, error) {
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: commit.Repo.Org.InstallationToken},
 	)
-	tc := oauth2.NewClient(gctx, ts)
+	tc := oauth2.NewClient(ctx.Context, ts)
 	client := github.NewClient(tc)
 
-	gitCommit, _, err := client.Repositories.GetCommit(gctx, commit.Repo.Org.Name, commit.Repo.Name, commit.Sha, nil)
+	gitCommit, _, err := client.Repositories.GetCommit(ctx.Context, commit.Repo.Org.Name, commit.Repo.Name, commit.Sha, nil)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
