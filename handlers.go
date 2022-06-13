@@ -25,6 +25,7 @@ import (
 	"olympos.io/encoding/edn"
 )
 
+// Mapping for types in the incoming event payload
 type GitCommitAuthor struct {
 	Name  string `json:"git.user/name"`
 	Login string `json:"git.user/login"`
@@ -50,16 +51,17 @@ type GitCommit struct {
 	Repo    GitRepo         `json:"git.commit/repo"`
 }
 
+// Mapping for entities that we want to transact
 type GitRepoEntity struct {
 	EntityType edn.Keyword `edn:"schema/entity-type"`
-	Entity     string      `edn:"schema/entity"`
+	Entity     string      `edn:"schema/entity,omitempty"`
 	SourceId   string      `edn:"git.repo/source-id"`
 	Url        string      `edn:"git.provider/url"`
 }
 
 type GitCommitEntity struct {
 	EntityType edn.Keyword `edn:"schema/entity-type"`
-	Entity     string      `edn:"schema/entity"`
+	Entity     string      `edn:"schema/entity,omitempty"`
 	Sha        string      `edn:"git.commit/sha"`
 	Repo       string      `edn:"git.commit/repo"`
 	Url        string      `edn:"git.provider/url"`
@@ -71,7 +73,7 @@ type GitCommitSignatureEntity struct {
 	Commit     string      `edn:"git.commit.signature/commit"`
 	Signature  string      `edn:"git.commit.signature/signature,omitempty"`
 	Reason     string      `edn:"git.commit.signature/reason,omitempty"`
-	Verified   edn.Keyword `edn:"git.commit.signature/verified,omitempty"`
+	Status     edn.Keyword `edn:"git.commit.signature/status,omitempty"`
 }
 
 const (
@@ -79,19 +81,12 @@ const (
 	NotVerified             = "git.commit.signature/NOT_VERIFIED"
 )
 
+// Handler to transact a commit signature on pushes
 func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 
 	for _, e := range ctx.Event.Subscription.Result {
 		commit := skill.Decode[GitCommit](e[0])
-
-		gctx := context.Background()
-		ts := oauth2.StaticTokenSource(
-			&oauth2.Token{AccessToken: commit.Repo.Org.InstallationToken},
-		)
-		tc := oauth2.NewClient(gctx, ts)
-		client := github.NewClient(tc)
-
-		gitCommit, _, err := client.Repositories.GetCommit(gctx, commit.Repo.Org.Name, commit.Repo.Name, commit.Sha, nil)
+		gitCommit, err := GetCommit(&commit)
 		if err != nil {
 			fmt.Println(err)
 			return skill.Status{
@@ -122,7 +117,7 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 			EntityType: "git.commit/signature",
 			Commit:     "$commit",
 			Signature:  *gitCommit.Commit.Verification.Signature,
-			Verified:   verified,
+			Status:     verified,
 			Reason:     *gitCommit.Commit.Verification.Reason,
 		}})
 		if err != nil {
@@ -140,4 +135,22 @@ func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 		Code:   0,
 		Reason: fmt.Sprintf("Successfully transacted commit signature for %d commits", len(ctx.Event.Subscription.Result)),
 	}
+}
+
+// Obtain commit information from GitHub
+func GetCommit(commit *GitCommit) (*github.RepositoryCommit, error) {
+	gctx := context.Background()
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: commit.Repo.Org.InstallationToken},
+	)
+	tc := oauth2.NewClient(gctx, ts)
+	client := github.NewClient(tc)
+
+	gitCommit, _, err := client.Repositories.GetCommit(gctx, commit.Repo.Org.Name, commit.Repo.Name, commit.Sha, nil)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	return gitCommit, err
 }

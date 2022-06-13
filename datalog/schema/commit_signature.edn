@@ -24,7 +24,7 @@
   :git.commit.signature/reason       {:db/valueType   :db.type/string
                                       :db/doc         "The reason for verified value"
                                       :db/cardinality :db.cardinality/one}
-  :git.commit.signature/verified     {:db/valueType   :db.type/ref
+  :git.commit.signature/status       {:db/valueType   :db.type/ref
                                       :db/doc         "Fact indicating if a commit signature was verified"
                                       :db/cardinality :db.cardinality/one}
 
