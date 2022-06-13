@@ -1,3 +1,3 @@
 # go-sample-skill
 
-Simple skill showing how to subscribe and transact new data.
+Simple skill showing how to subscribe to and transact new data.
