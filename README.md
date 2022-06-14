@@ -1,6 +1,6 @@
-# go-sample-skill
+# `atomist/go-sample-skill`
 
-Simple skill showing how to subscribe to and transact new data.
+Simple skill showing how to subscribe to and transact new data written in Go.
 
 ## Files
 
