@@ -5,7 +5,7 @@ Simple skill showing how to subscribe to and transact new data written in Go.
 ## Files
 
 | File                                                                       | Description                                    |
-|----------------------------------------------------------------------------|------------------------------------------------|
+| -------------------------------------------------------------------------- | ---------------------------------------------- |
 | [datalog/schema/commit_signature.edn](datalog/schema/commit_signature.edn) | Datalog schema defining Commit signature facts |
 | [datalog/subscription/on_push.edn](datalog/subscription/on_push.edn)       | Subscription for new pushes                    |
 | [main.go](main.go)                                                         | Go file defining `main` entrypoint             |
