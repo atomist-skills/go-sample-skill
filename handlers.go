@@ -22,6 +22,7 @@ import (
 	"github.com/google/go-github/v45/github"
 	"golang.org/x/oauth2"
 	"olympos.io/encoding/edn"
+	"reflect"
 )
 
 // Mapping for types in the incoming event payload
@@ -112,6 +113,11 @@ func ProcessCommit(ctx skill.EventContext, commit GitCommit) error {
 	} else {
 		verified = NotVerified
 	}
+	var signature string
+	verification := *gitCommit.Commit.Verification
+	if !reflect.ValueOf(verification.Signature).IsNil() {
+		signature = *verification.Signature
+	}
 
 	err = ctx.Transact([]any{GitRepoEntity{
 		EntityType: "git/repo",
@@ -127,7 +133,7 @@ func ProcessCommit(ctx skill.EventContext, commit GitCommit) error {
 	}, GitCommitSignatureEntity{
 		EntityType: "git.commit/signature",
 		Commit:     "$commit",
-		Signature:  *gitCommit.Commit.Verification.Signature,
+		Signature:  signature,
 		Status:     verified,
 		Reason:     *gitCommit.Commit.Verification.Reason,
 	}})
