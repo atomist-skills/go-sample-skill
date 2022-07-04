@@ -38,16 +38,18 @@ func TestProcessCommit(t *testing.T) {
 			SourceId: "123456",
 		},
 	}
-	ctx := skill.EventContext{
-		CorrelationId: "12345",
-		WorkspaceId:   "T29E48P34",
-		Skill: skill.Skill{
-			Namespace: "atomist",
-			Name:      "go-sample-skill",
-			Version:   "1.0.0",
-		},
-		Log:     log.Default(),
+	ctx := skill.EventContext[GitCommit]{
 		Context: context.Background(),
+		Log: skill.Logger{
+			Log: func(msg string) error {
+				log.Print(msg)
+				return nil
+			},
+			Logf: func(format string, a ...any) error {
+				log.Printf(format, a)
+				return nil
+			},
+		},
 		Transact: func(entities interface{}) error {
 			switch reflect.TypeOf(entities).Kind() {
 			case reflect.Slice:
