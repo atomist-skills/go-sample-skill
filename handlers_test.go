@@ -38,15 +38,15 @@ func TestProcessCommit(t *testing.T) {
 			SourceId: "123456",
 		},
 	}
-	ctx := skill.EventContext[GitCommit]{
+	ctx := skill.EventContext{
 		Context: context.Background(),
 		Log: skill.Logger{
-			Log: func(msg string) error {
+			Print: func(msg string) error {
 				log.Print(msg)
 				return nil
 			},
-			Logf: func(format string, a ...any) error {
-				log.Printf(format, a)
+			Printf: func(format string, a ...any) error {
+				log.Printf(format, a...)
 				return nil
 			},
 		},

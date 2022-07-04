@@ -81,18 +81,11 @@ const (
 	NotVerified             = "git.commit.signature/NOT_VERIFIED"
 )
 
-func Decode[P interface{}](event map[edn.Keyword]edn.RawMessage) P {
-	ednboby, _ := edn.Marshal(event)
-	var decoded P
-	edn.Unmarshal(ednboby, &decoded)
-	return decoded
-}
-
 // Handler to transact a commit signature on pushes
 func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 
 	for _, e := range ctx.Event.Context.Subscription.Result {
-		commit := Decode[GitCommit](e[0])
+		commit := skill.Decode[GitCommit](e[0])
 		err := ProcessCommit(ctx, commit)
 		if err != nil {
 			return skill.Status{
@@ -148,7 +141,7 @@ func ProcessCommit(ctx skill.EventContext, commit GitCommit) error {
 		return err
 	}
 
-	ctx.Log.Logf("Transacted commit signature for %s", commit.Sha)
+	ctx.Log.Printf("Transacted commit signature for %s", commit.Sha)
 	return err
 }
 
