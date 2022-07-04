@@ -27,28 +27,28 @@ import (
 
 // Mapping for types in the incoming event payload
 type GitCommitAuthor struct {
-	Name  string `json:"git.user/name"`
-	Login string `json:"git.user/login"`
+	Name  string `edn:"git.user/name"`
+	Login string `edn:"git.user/login"`
 }
 
 type GitOrg struct {
-	Name              string `json:"git.org/name"`
-	InstallationToken string `json:"github.org/installation-token"`
-	Url               string `json:"git.provider/url"`
+	Name              string `edn:"git.org/name"`
+	InstallationToken string `edn:"github.org/installation-token"`
+	Url               string `edn:"git.provider/url"`
 }
 
 type GitRepo struct {
-	Name          string `json:"git.repo/name"`
-	DefaultBranch string `json:"git.repo/default-branch"`
-	Org           GitOrg `json:"git.repo/org"`
-	SourceId      string `json:"git.repo/source-id"`
+	Name          string `edn:"git.repo/name"`
+	DefaultBranch string `edn:"git.repo/default-branch"`
+	Org           GitOrg `edn:"git.repo/org"`
+	SourceId      string `edn:"git.repo/source-id"`
 }
 
 type GitCommit struct {
-	Sha     string          `json:"git.commit/sha"`
-	Message string          `json:"git.commit/message"`
-	Author  GitCommitAuthor `json:"git.commit/author"`
-	Repo    GitRepo         `json:"git.commit/repo"`
+	Sha     string          `edn:"git.commit/sha"`
+	Message string          `edn:"git.commit/message"`
+	Author  GitCommitAuthor `edn:"git.commit/author"`
+	Repo    GitRepo         `edn:"git.commit/repo"`
 }
 
 // Mapping for entities that we want to transact
@@ -81,15 +81,23 @@ const (
 	NotVerified             = "git.commit.signature/NOT_VERIFIED"
 )
 
+func Decode[P interface{}](event map[edn.Keyword]edn.RawMessage) P {
+	ednboby, _ := edn.Marshal(event)
+	var decoded P
+	edn.Unmarshal(ednboby, &decoded)
+	return decoded
+}
+
 // Handler to transact a commit signature on pushes
-func TransactCommitSignature(ctx skill.EventContext[GitCommit]) skill.Status {
+func TransactCommitSignature(ctx skill.EventContext) skill.Status {
 
 	for _, e := range ctx.Event.Context.Subscription.Result {
-		err := ProcessCommit(ctx, e)
+		commit := Decode[GitCommit](e[0])
+		err := ProcessCommit(ctx, commit)
 		if err != nil {
 			return skill.Status{
 				State:  skill.Failed,
-				Reason: fmt.Sprintf("Failed to transact signature for %s", e.Sha),
+				Reason: fmt.Sprintf("Failed to transact signature for %s", commit.Sha),
 			}
 		}
 	}
@@ -100,7 +108,7 @@ func TransactCommitSignature(ctx skill.EventContext[GitCommit]) skill.Status {
 	}
 }
 
-func ProcessCommit(ctx skill.EventContext[GitCommit], commit GitCommit) error {
+func ProcessCommit(ctx skill.EventContext, commit GitCommit) error {
 	gitCommit, err := GetCommit(ctx, &commit)
 	if err != nil {
 		return err
@@ -145,7 +153,7 @@ func ProcessCommit(ctx skill.EventContext[GitCommit], commit GitCommit) error {
 }
 
 // Obtain commit information from GitHub
-func GetCommit(ctx skill.EventContext[GitCommit], commit *GitCommit) (*github.RepositoryCommit, error) {
+func GetCommit(ctx skill.EventContext, commit *GitCommit) (*github.RepositoryCommit, error) {
 	var client *github.Client
 
 	if commit.Repo.Org.InstallationToken != "" {

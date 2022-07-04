@@ -19,7 +19,7 @@ package main
 import "github.com/atomist-skills/go-skill"
 
 func main() {
-	skill.Start(map[string]interface{}{
+	skill.Start(skill.Handlers{
 		"on_push": TransactCommitSignature,
 	})
 }
