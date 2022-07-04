@@ -118,6 +118,10 @@ github.com/atomist-skills/go-skill v0.0.0-20220704160335-dc60078e3023 h1:4QH1pFx
 github.com/atomist-skills/go-skill v0.0.0-20220704160335-dc60078e3023/go.mod h1:sNd9G1vvg/Pld1pdIp2fJBg1Cq2UATpsmaUOEFtaAU4=
 github.com/atomist-skills/go-skill v0.0.0-20220704161354-46cf3ef8e2c2 h1:4uT7crmUCGWwmydAqkUj+rjOG8lFC4zz5G8j+Eiiaw0=
 github.com/atomist-skills/go-skill v0.0.0-20220704161354-46cf3ef8e2c2/go.mod h1:sNd9G1vvg/Pld1pdIp2fJBg1Cq2UATpsmaUOEFtaAU4=
+github.com/atomist-skills/go-skill v0.0.0-20220704162712-1486138381a2 h1:+flC7/FXdXP8zU2ZfEhe020jSZGNzNGA3fKV66Ytyc0=
+github.com/atomist-skills/go-skill v0.0.0-20220704162712-1486138381a2/go.mod h1:sNd9G1vvg/Pld1pdIp2fJBg1Cq2UATpsmaUOEFtaAU4=
+github.com/atomist-skills/go-skill v0.0.0-20220704162858-bb4a5024701d h1:qPAe1nVgNuPD2UtwSx/9Wk7tLE+8TQBA/9QvSVaGuDM=
+github.com/atomist-skills/go-skill v0.0.0-20220704162858-bb4a5024701d/go.mod h1:sNd9G1vvg/Pld1pdIp2fJBg1Cq2UATpsmaUOEFtaAU4=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=
 github.com/cespare/xxhash/v2 v2.1.1/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
