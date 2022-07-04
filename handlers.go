@@ -82,26 +82,25 @@ const (
 )
 
 // Handler to transact a commit signature on pushes
-func TransactCommitSignature(ctx skill.EventContext) skill.Status {
+func TransactCommitSignature(ctx skill.EventContext[GitCommit]) skill.Status {
 
-	for _, e := range ctx.Event.Subscription.Result {
-		commit := skill.Decode[GitCommit](e[0])
-		err := ProcessCommit(ctx, commit)
+	for _, e := range ctx.Event.Context.Subscription.Result {
+		err := ProcessCommit(ctx, e)
 		if err != nil {
 			return skill.Status{
-				Code:   1,
-				Reason: fmt.Sprintf("Failed to transact signature for %s", commit.Sha),
+				State:  skill.Failed,
+				Reason: fmt.Sprintf("Failed to transact signature for %s", e.Sha),
 			}
 		}
 	}
 
 	return skill.Status{
-		Code:   0,
-		Reason: fmt.Sprintf("Successfully transacted commit signature for %d commit", len(ctx.Event.Subscription.Result)),
+		State:  skill.Completed,
+		Reason: fmt.Sprintf("Successfully transacted commit signature for %d commit", len(ctx.Event.Context.Subscription.Result)),
 	}
 }
 
-func ProcessCommit(ctx skill.EventContext, commit GitCommit) error {
+func ProcessCommit(ctx skill.EventContext[GitCommit], commit GitCommit) error {
 	gitCommit, err := GetCommit(ctx, &commit)
 	if err != nil {
 		return err
@@ -141,12 +140,12 @@ func ProcessCommit(ctx skill.EventContext, commit GitCommit) error {
 		return err
 	}
 
-	ctx.Log.Printf("Transacted commit signature for %s", commit.Sha)
+	ctx.Log.Logf("Transacted commit signature for %s", commit.Sha)
 	return err
 }
 
 // Obtain commit information from GitHub
-func GetCommit(ctx skill.EventContext, commit *GitCommit) (*github.RepositoryCommit, error) {
+func GetCommit(ctx skill.EventContext[GitCommit], commit *GitCommit) (*github.RepositoryCommit, error) {
 	var client *github.Client
 
 	if commit.Repo.Org.InstallationToken != "" {

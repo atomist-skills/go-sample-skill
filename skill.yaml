@@ -13,8 +13,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-apiVersion: 1
 skill:
+  apiVersion: v2
   name: go-sample-skill
   namespace: atomist
   displayName: Go Sample Skill
