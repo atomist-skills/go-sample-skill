@@ -21,10 +21,9 @@ FROM golang:1.18-alpine@sha256:7cc62574fcf9c5fb87ad42a9789d5539a6a085971d58ee75d
 WORKDIR /skill
 
 COPY --from=build /app/go-sample-skill .
-COPY skill.yaml /
-COPY datalog /datalog
+COPY skill.yaml .
+COPY datalog ./datalog
 
-LABEL com.docker.skill.namespace="atomist" \
-  com.docker.skill.name="go-sample-skill"
+LABEL com.docker.skill.path="/skill/"
 
 ENTRYPOINT ["/skill/go-sample-skill"]
