@@ -11,7 +11,6 @@ Simple skill showing how to subscribe to and transact new data written in Go.
 | [main.go](main.go)                                                         | Go file defining `main` entrypoint             |
 | [handlers.go](handlers.go)                                                 | Go file defining the event handlers            |
 | [skill.yaml](skill.yaml)                                                   | Skill descriptor (metadata and parameters etc) |
-| [skill.package.yaml](skill.package.yaml)                                   | Skill packaging instructions                   |
 
 ## Contributing
 
