@@ -24,7 +24,7 @@ COPY --from=build /app/go-sample-skill .
 COPY skill.yaml /
 COPY datalog /datalog
 
-LABEL com.docker.skill.namepsace="atomist" \
+LABEL com.docker.skill.namespace="atomist" \
   com.docker.skill.name="go-sample-skill"
 
 ENTRYPOINT ["/skill/go-sample-skill"]
