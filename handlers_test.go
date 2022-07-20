@@ -38,8 +38,7 @@ func TestProcessCommit(t *testing.T) {
 			SourceId: "123456",
 		},
 	}
-	ctx := skill.EventContext{
-		Context: context.Background(),
+	req := skill.RequestContext{
 		Log: skill.Logger{
 			Print: func(msg string) error {
 				log.Print(msg)
@@ -88,8 +87,13 @@ func TestProcessCommit(t *testing.T) {
 			return nil
 		},
 	}
-	err := ProcessCommit(ctx, commit)
+	ctx := context.Background()
+	gitCommit, err := getCommit(ctx, req, &commit)
 	if err != nil {
-		t.Error("ProcessCommit errored")
+		t.Error("getCommit errored")
+	}
+	err = transactCommitSignature(context.Background(), req, commit, gitCommit)
+	if err != nil {
+		t.Error("transactCommitSignature errored")
 	}
 }

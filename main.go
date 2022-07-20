@@ -21,5 +21,6 @@ import "github.com/atomist-skills/go-skill"
 func main() {
 	skill.Start(skill.Handlers{
 		"on_push": TransactCommitSignature,
+		"on_commit_signature": LogCommitSignature,
 	})
 }

@@ -1,0 +1,48 @@
+
+;; Copyright © 2022 Atomist, Inc.
+;;
+;; Licensed under the Apache License, Version 2.0 (the "License");
+;; you may not use this file except in compliance with the License.
+;; You may obtain a copy of the License at
+;;
+;;     http://www.apache.org/licenses/LICENSE-2.0
+;;
+;; Unless required by applicable law or agreed to in writing, software
+;; distributed under the License is distributed on an "AS IS" BASIS,
+;; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+;; See the License for the specific language governing permissions and
+;; limitations under the License.
+
+[:find
+ (pull
+   ?commit
+   [:schema/entity-type
+    {(:git.ref/_commit :as :git.ref/refs) [:git.ref/name
+                                           :git.ref/type]}
+    {:git.commit/repo [:git.repo/name
+                       :git.repo/source-id
+                       :git.repo/default-branch
+                       {:git.repo/org [:github.org/installation-token
+                                       :git.org/name
+                                       :git.provider/url]}]}
+    {:git.commit/author [:git.user/name
+                         :git.user/login
+                         {:git.user/emails [:email.email/address]}]}
+    :git.commit/sha
+    :git.commit/message])
+ (pull
+    ?signature
+    [:schema/entity-type
+     :git.commit.signature/signature
+     :git.commit.signature/reason
+     :git.commit.signature/status])
+ :in $ $before-db % ?ctx
+ :where
+ (attributes-tx ?ctx ?signature :git.commit.signature/commit ?commit)
+ 
+ ;; check that signature is verified
+ [?signature :git.commit.signature/status :git.commit.signature/VERIFIED]
+
+ ;; check repo filter
+ [?commit :git.commit/repo ?repo]
+ (skill-repo-selected? ?ctx ?repo)]
