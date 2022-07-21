@@ -94,11 +94,11 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
 
-      # Extract SBOM for images that are not getting pushed to the registry
-      - name: Create SBOM
+      # Extract SBOMs for images that are not getting pushed to the registry
+      - name: Extract and upload SBOM
         if: ${{ github.event_name == 'pull_request' }}
         id: sbom
-        uses: atomist-skills/index-image-action@main
+        uses: atomist-skills/index-image-action@ce3cbd03871b49e4821ed65ccb8d41656a0065a8
         with:
           image: ${{ steps.meta.outputs.tags }}
           api-key: ${{ secrets.ATOMIST_API_KEY }}
