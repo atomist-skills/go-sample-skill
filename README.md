@@ -9,6 +9,7 @@ Simple skill showing how to subscribe to and transact new data written in Go.
 | [datalog/schema/commit_signature.edn](datalog/schema/commit_signature.edn) | Datalog schema defining Commit signature facts |
 | [datalog/subscription/on_push.edn](datalog/subscription/on_push.edn)       | Subscription for new pushes                    |
 | [datalog/subscription/on_commit_signature.edn](datalog/subscription/on_commit_signature.edn)       | Subscription for new commit signatures added to the database                    |
+| [Dockerfile](Dockerfile)                                                   | Dockerfile to build the Skill runtime container image       |
 | [main.go](main.go)                                                         | Go file defining `main` entrypoint             |
 | [handlers.go](handlers.go)                                                 | Go file defining the event handlers            |
 | [skill.yaml](skill.yaml)                                                   | Skill descriptor (metadata and parameters etc) |
