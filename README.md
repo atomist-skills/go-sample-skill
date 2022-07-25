@@ -1,4 +1,4 @@
-# `atomist/go-sample-skill`
+# Go Sample Skill
 
 Simple skill showing how to subscribe to and transact new data written in Go.
 
@@ -79,4 +79,3 @@ Created by [Atomist][atomist]. Need Help? [Join our Slack workspace][slack].
 
 [atomist]: https://atomist.com/ "Atomist"
 [slack]: https://join.atomist.com/ "Atomist Community Slack"
-
