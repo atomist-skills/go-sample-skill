@@ -96,7 +96,10 @@ jobs:
 
       # Extract SBOMs for images that are not getting pushed to the registry
       - name: Extract and upload SBOM
-        if: ${{ github.event_name == 'pull_request' }}
+        if:
+          - ${{ github.event_name == 'pull_request' }}
+          - ${{ secrets.ATOMIST_API_KEY }}
+          - ${{ secrets.ATOMIST_WORKSPACE }}
         id: sbom
         uses: atomist-skills/index-image-action@ce3cbd03871b49e4821ed65ccb8d41656a0065a8
         with:
