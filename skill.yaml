@@ -15,11 +15,9 @@
 
 skill:
   apiVersion: v2
-  # namespace: atomist
-  # name: go-sample-skill
+  # namespace: <defaults to GitHub org name>
+  # name: <defaults to GitHub repository name>
   displayName: Go Sample Skill
   description: Very basic sample skill written in Go
   author: Atomist
   license: Apache-2.0
-  categories:
-    - CODE_MAINTENANCE
