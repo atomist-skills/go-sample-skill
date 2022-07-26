@@ -20,79 +20,20 @@ import (
 	"context"
 	"fmt"
 	"github.com/atomist-skills/go-skill"
+	"github.com/atomist-skills/go-skill/util"
 	"github.com/google/go-github/v45/github"
 	"golang.org/x/oauth2"
 	"olympos.io/encoding/edn"
 	"reflect"
 )
 
-// Mapping for types in the incoming event payload
-type GitCommitAuthor struct {
-	Name  string `edn:"git.user/name"`
-	Login string `edn:"git.user/login"`
-}
 
-type GitOrg struct {
-	Name              string `edn:"git.org/name"`
-	InstallationToken string `edn:"github.org/installation-token"`
-	Url               string `edn:"git.provider/url"`
-}
-
-type GitRepo struct {
-	Name          string `edn:"git.repo/name"`
-	DefaultBranch string `edn:"git.repo/default-branch"`
-	Org           GitOrg `edn:"git.repo/org"`
-	SourceId      string `edn:"git.repo/source-id"`
-}
-
-type GitCommit struct {
-	Sha     string          `edn:"git.commit/sha"`
-	Message string          `edn:"git.commit/message"`
-	Author  GitCommitAuthor `edn:"git.commit/author"`
-	Repo    GitRepo         `edn:"git.commit/repo"`
-}
-
-type GitCommitSignature struct {
-	Signature string      `edn:"git.commit.signature/signature"`
-	Reason    string      `edn:"git.commit.signature/reason"`
-	Status    edn.Keyword `edn:"git.commit.signature/status"`
-}
-
-// Mapping for entities that we want to transact
-type GitRepoEntity struct {
-	EntityType edn.Keyword `edn:"schema/entity-type"`
-	Entity     string      `edn:"schema/entity,omitempty"`
-	SourceId   string      `edn:"git.repo/source-id"`
-	Url        string      `edn:"git.provider/url"`
-}
-
-type GitCommitEntity struct {
-	EntityType edn.Keyword `edn:"schema/entity-type"`
-	Entity     string      `edn:"schema/entity,omitempty"`
-	Sha        string      `edn:"git.commit/sha"`
-	Repo       string      `edn:"git.commit/repo"`
-	Url        string      `edn:"git.provider/url"`
-}
-
-type GitCommitSignatureEntity struct {
-	EntityType edn.Keyword `edn:"schema/entity-type"`
-	Entity     string      `edn:"schema/entity,omitempty"`
-	Commit     string      `edn:"git.commit.signature/commit"`
-	Signature  string      `edn:"git.commit.signature/signature,omitempty"`
-	Reason     string      `edn:"git.commit.signature/reason,omitempty"`
-	Status     edn.Keyword `edn:"git.commit.signature/status,omitempty"`
-}
-
-const (
-	Verified    edn.Keyword = "git.commit.signature/VERIFIED"
-	NotVerified             = "git.commit.signature/NOT_VERIFIED"
-)
 
 // TransactCommitSignature processed incoming Git pushes and transacts the commit signature
 // as returned by GitHub
 func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skill.Status {
 	result := req.Event.Context.Subscription.Result[0]
-	commit := skill.Decode[GitCommit](result[0])
+	commit := util.Decode[GitCommit](result[0])
 	gitCommit, err := getCommit(ctx, req, &commit)
 
 	if err != nil {
@@ -120,8 +61,8 @@ func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skil
 // the database and logs the signature
 func LogCommitSignature(ctx context.Context, req skill.RequestContext) skill.Status {
 	result := req.Event.Context.Subscription.Result[0]
-	commit := skill.Decode[GitCommit](result[0])
-	signature := skill.Decode[GitCommitSignature](result[1])
+	commit := util.Decode[GitCommit](result[0])
+	signature := util.Decode[GitCommitSignature](result[1])
 
 	req.Log.Infof("Commit %s is signed and verified by: %s ", commit.Sha, signature.Signature)
 

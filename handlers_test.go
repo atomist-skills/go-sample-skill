@@ -40,13 +40,17 @@ func TestProcessCommit(t *testing.T) {
 	}
 	req := skill.RequestContext{
 		Log: skill.Logger{
-			Print: func(msg string) error {
+			Debug: func(msg string) {
 				log.Print(msg)
-				return nil
 			},
-			Printf: func(format string, a ...any) error {
+			Debugf: func(format string, a ...any) {
 				log.Printf(format, a...)
-				return nil
+			},
+			Info: func(msg string) {
+				log.Print(msg)
+			},
+			Infof: func(format string, a ...any) {
+				log.Printf(format, a...)
 			},
 		},
 		Transact: func(entities interface{}) error {
