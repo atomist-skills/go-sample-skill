@@ -24,8 +24,8 @@ skill:
   parameters:
     - webhook:
         name: on_webhook
-        displayName: Event Webhook
-        description: Ingest data from the outside world
+        displayName: Webhook
+        description: Send any kind of data
         required: false
         authorizationTypes:
           - httpBasic
