@@ -21,3 +21,11 @@ skill:
   description: Very basic sample skill written in Go
   author: Atomist
   license: Apache-2.0
+  parameters:
+    - webhook:
+        name: on_webhook
+        displayName: Event Webhook
+        description: Ingest data from the outside world
+        required: false
+        authorizationTypes:
+          - httpBasic

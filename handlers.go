@@ -123,7 +123,7 @@ func LogCommitSignature(ctx context.Context, req skill.RequestContext) skill.Sta
 	commit := skill.Decode[GitCommit](result[0])
 	signature := skill.Decode[GitCommitSignature](result[1])
 
-	req.Log.Printf("Commit %s is signed and verified by: %s ", commit.Sha, signature.Signature)
+	req.Log.Infof("Commit %s is signed and verified by: %s ", commit.Sha, signature.Signature)
 
 	return skill.Status{
 		State:  skill.Completed,
@@ -167,7 +167,7 @@ func transactCommitSignature(ctx context.Context, req skill.RequestContext, comm
 		return err
 	}
 
-	req.Log.Printf("Transacted commit signature for %s", commit.Sha)
+	req.Log.Infof("Transacted commit signature for %s", commit.Sha)
 	return err
 }
 
