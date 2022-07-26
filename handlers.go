@@ -72,6 +72,18 @@ func LogCommitSignature(ctx context.Context, req skill.RequestContext) skill.Sta
 	}
 }
 
+// LogWebhookBody logs incoming webhook bodies
+func LogWebhookBody(ctx context.Context, req skill.RequestContext) skill.Status {
+	body := req.Event.Context.Webhook.Request.Body
+
+	req.Log.Infof("Webhook body: %s ", body)
+
+	return skill.Status{
+		State:  skill.Completed,
+		Reason: "Handled incoming webhook event",
+	}
+}
+
 // transactCommitSignature transact the commit signature facts
 func transactCommitSignature(ctx context.Context, req skill.RequestContext, commit GitCommit, gitCommit *github.RepositoryCommit) error {
 	var verified edn.Keyword
