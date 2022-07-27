@@ -22,6 +22,11 @@ skill:
   author: Atomist
   license: Apache-2.0
   parameters:
+    - repoFilter:
+        name: repoFilter
+        displayName: Which repositories
+        description: ''
+        required: false
     - webhook:
         name: on_webhook
         displayName: Webhook
