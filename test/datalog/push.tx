@@ -1,0 +1,48 @@
+[{:schema/entity-type :git/org
+  :schema/entity "$org"
+  :git.provider/url "https://github.com"
+  :atomist/graphql-id "T095SFFBK_atomisthq_T095SFFBK"
+  :git.org/name "atomisthq"
+  :git.org/url "https://github.com/atomisthq"
+  :git.org/source-id "13823265"}
+
+ {:schema/entity-type :git/repo
+  :schema/entity "$repo"
+  :git.provider/url "https://github.com"
+  :atomist/graphql-id "T095SFFBK_T095SFFBK_web-app-cljs_225951504"
+  :git.repo/name "web-app-cljs"
+  :git.repo/default-branch "master"
+  :git.repo/source-id "225951504"
+  :git.repo/topics ["topic-a" "topic-b"]
+  :git.repo/org "$org"}
+
+ {:schema/entity-type :git/commit
+  :schema/entity "$head-commit"
+  :git.provider/url "https://github.com"
+  :atomist/graphql-id "T095SFFBK_8976e7077a86e2755486eb136103b26cef5c78d7"
+  :git.commit/sha "8976e7077a86e2755486eb136103b26cef5c78d7"
+  :git.commit/message "message"
+  :git.commit/repo "$repo"
+  :git.commit/email "$head-commit-email"
+  :git.commit/author "$commit-author"}
+
+ {:schema/entity-type :git/user
+  :schema/entity "$commit-author"
+  :atomist/graphql-id "T095SFFBK_whostolebenfrog_7fce095f-f909-40c9-a9f7-ca2c9196690d"
+  :git.user/login "whostolebenfrog"
+  :git.user/name "Ben Griffiths"
+  :git.user/emails ["$head-commit-email"]
+  :git.provider/url "https://github.com"}
+
+ {:schema/entity-type :git/ref
+  :git.ref/type :git.ref.type/branch
+  :git.provider/url "https://github.com"
+  :git.ref/name "master"
+  :git.ref/repo "$repo" 
+  :git.ref/commit "$head-commit"}
+
+ {:schema/entity-type :email/email
+  :schema/entity "$head-commit-email"
+  :atomist/graphql-id "T095SFFBK_22779605+atomist[bot]@users.noreply.github.com"
+  :email.email/address "22779605+atomist[bot]@users.noreply.github.com"}]
+
