@@ -45,4 +45,3 @@
   :schema/entity "$head-commit-email"
   :atomist/graphql-id "T095SFFBK_22779605+atomist[bot]@users.noreply.github.com"
   :email.email/address "22779605+atomist[bot]@users.noreply.github.com"}]
-
