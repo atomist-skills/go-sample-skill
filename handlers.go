@@ -64,7 +64,7 @@ func LogCommitSignature(ctx context.Context, req skill.RequestContext) skill.Sta
 	commit := util.Decode[GitCommit](result[0])
 	signature := util.Decode[GitCommitSignature](result[1])
 
-	req.Log.Infof("Commit %s is signed and verified by: %s ", commit.Sha, signature.Signature)
+	req.Log.Infof("Commit %s is signed and verified by: %s", commit.Sha, signature.Signature)
 
 	return skill.Status{
 		State:  skill.Completed,
@@ -76,7 +76,7 @@ func LogCommitSignature(ctx context.Context, req skill.RequestContext) skill.Sta
 func LogWebhookBody(ctx context.Context, req skill.RequestContext) skill.Status {
 	body := req.Event.Context.Webhook.Request.Body
 
-	req.Log.Infof("Webhook body: %s ", body)
+	req.Log.Infof("Webhook body: %s", body)
 
 	return skill.Status{
 		State:  skill.Completed,
