@@ -26,3 +26,5 @@ WORKDIR /skill
 COPY --from=build /app/go-sample-skill .
 
 ENTRYPOINT ["/skill/go-sample-skill"]
+
+RUN apk add --no-cache docker
