@@ -27,8 +27,6 @@ import (
 	"reflect"
 )
 
-
-
 // TransactCommitSignature processed incoming Git pushes and transacts the commit signature
 // as returned by GitHub
 func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skill.Status {
