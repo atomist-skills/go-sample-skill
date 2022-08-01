@@ -19,15 +19,14 @@ package main
 import (
 	"context"
 	"fmt"
+	"reflect"
+
 	"github.com/atomist-skills/go-skill"
 	"github.com/atomist-skills/go-skill/util"
 	"github.com/google/go-github/v45/github"
 	"golang.org/x/oauth2"
 	"olympos.io/encoding/edn"
-	"reflect"
 )
-
-
 
 // TransactCommitSignature processed incoming Git pushes and transacts the commit signature
 // as returned by GitHub

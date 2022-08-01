@@ -18,11 +18,12 @@ package main
 
 import (
 	"context"
-	"github.com/atomist-skills/go-skill"
 	"log"
-	"olympos.io/encoding/edn"
 	"reflect"
 	"testing"
+
+	"github.com/atomist-skills/go-skill"
+	"olympos.io/encoding/edn"
 )
 
 func TestProcessCommit(t *testing.T) {
