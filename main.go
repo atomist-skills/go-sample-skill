@@ -22,6 +22,6 @@ func main() {
 	skill.Start(skill.Handlers{
 		"on_push":                               TransactCommitSignature,
 		"on_commit_signature": LogCommitSignature,
-		"on_webhook":                               LogWebhookBody,
+		"on_webhook":                               LogWebhookBody ,
 	})
 }
