@@ -17,11 +17,10 @@
 package main
 
 import (
+	"github.com/atomist-skills/go-skill"
 	"context"
 	"fmt"
 	"reflect"
-
-	"github.com/atomist-skills/go-skill"
 	"github.com/atomist-skills/go-skill/util"
 	"github.com/google/go-github/v45/github"
 	"golang.org/x/oauth2"
@@ -38,7 +37,11 @@ func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skil
 	if err != nil {
 		return skill.Status{
 			State:  skill.Failed,
-			Reason: fmt.Sprintf("Failed to obtain commit signature for %s", commit.Sha),
+			Reason: fmt.Sprintf("Failed to obtain commit signature for %s", 
+					    
+					    
+					    
+					    commit.Sha),
 		}
 	}
 
@@ -46,7 +49,12 @@ func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skil
 	if err != nil {
 		return skill.Status{
 			State:  skill.Failed,
-			Reason: fmt.Sprintf("Failed to transact signature for %s", commit.Sha),
+			Reason: fmt.Sprintf("Failed to transact signature for %s", 
+					    
+					    
+					    
+					    
+					    commit.Sha),
 		}
 	}
 
@@ -79,7 +87,7 @@ func LogWebhookBody(ctx context.Context, req skill.RequestContext) skill.Status 
 
 	return skill.Status{
 		State:  skill.Completed,
-		Reason: "Handled incoming webhook event",
+		Reason: "Handled incoming webhook event"                      ,
 	}
 }
 
