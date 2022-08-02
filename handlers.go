@@ -60,7 +60,11 @@ func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skil
 
 	return skill.Status{
 		State:  skill.Completed,
-		Reason: fmt.Sprintf("Successfully transacted commit signature for %d commit", len(req.Event.Context.Subscription.Result)),
+		Reason: fmt.Sprintf("Successfully transacted commit signature for %d commit", len(req.Event.Context.Subscription.Result
+												 
+												 
+												 
+												 )),
 	}
 }
 
