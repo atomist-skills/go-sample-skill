@@ -26,12 +26,25 @@ import (
 )
 
 func TestProcessCommit(t *testing.T) {
-	commit := GitCommit{
+	commit := OnCommit{
 		Sha: "d2c6724307f007755fc770944fd7bc5ff55933b0",
-		Repo: GitRepo{
+		Repo: struct {
+			Name          string `edn:"git.repo/name"`
+			DefaultBranch string `edn:"git.repo/default-branch"`
+			Org           struct {
+				Name              string `edn:"git.org/name"`
+				InstallationToken string `edn:"github.org/installation-token"`
+				Url               string `edn:"git.provider/url"`
+			} `edn:"git.repo/org"`
+			SourceId string `edn:"git.repo/source-id"`
+		}{
 			Name:          "go-sample-skill",
 			DefaultBranch: "main",
-			Org: GitOrg{
+			Org: struct {
+				Name              string `edn:"git.org/name"`
+				InstallationToken string `edn:"github.org/installation-token"`
+				Url               string `edn:"git.provider/url"`
+			}{
 				Name: "atomist-skills",
 				Url:  "https://github.com/",
 			},

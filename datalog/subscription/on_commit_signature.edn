@@ -16,8 +16,7 @@
 [:find
  (pull
    ?commit
-   [:schema/entity-type
-    {(:git.ref/_commit :as :git.ref/refs) [:git.ref/name
+   [{(:git.ref/_commit :as :git.ref/refs) [:git.ref/name
                                            :git.ref/type]}
     {:git.commit/repo [:git.repo/name
                        :git.repo/source-id
@@ -32,8 +31,7 @@
     :git.commit/message])
  (pull
     ?signature
-    [:schema/entity-type
-     :git.commit.signature/signature
+    [:git.commit.signature/signature
      :git.commit.signature/reason
      :git.commit.signature/status])
  :in $ $before-db % ?ctx

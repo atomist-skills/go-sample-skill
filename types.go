@@ -16,41 +16,42 @@
 
 package main
 
-import "olympos.io/encoding/edn"
+import (
+	"olympos.io/encoding/edn"
+)
 
-// Mapping for types in the incoming event payload
-type GitCommitAuthor struct {
-	Name  string `edn:"git.user/name"`
-	Login string `edn:"git.user/login"`
+// OnCommit maps the incoming commit of the on_push and on_commit_signature to a Go struct
+type OnCommit struct {
+	Sha     string `edn:"git.commit/sha"`
+	Message string `edn:"git.commit/message"`
+	Author  struct {
+		Name  string `edn:"git.user/name"`
+		Login string `edn:"git.user/login"`
+	} `edn:"git.commit/author"`
+	Repo struct {
+		Name          string `edn:"git.repo/name"`
+		DefaultBranch string `edn:"git.repo/default-branch"`
+		Org           struct {
+			Name              string `edn:"git.org/name"`
+			InstallationToken string `edn:"github.org/installation-token"`
+			Url               string `edn:"git.provider/url"`
+		} `edn:"git.repo/org"`
+		SourceId string `edn:"git.repo/source-id"`
+	} `edn:"git.commit/repo"`
+	Refs []struct {
+		Name string      `edn:"git.ref/name"`
+		Type edn.Keyword `edn:"git.ref/type"`
+	} `edn:"git.ref/refs"`
 }
 
-type GitOrg struct {
-	Name              string `edn:"git.org/name"`
-	InstallationToken string `edn:"github.org/installation-token"`
-	Url               string `edn:"git.provider/url"`
-}
-
-type GitRepo struct {
-	Name          string `edn:"git.repo/name"`
-	DefaultBranch string `edn:"git.repo/default-branch"`
-	Org           GitOrg `edn:"git.repo/org"`
-	SourceId      string `edn:"git.repo/source-id"`
-}
-
-type GitCommit struct {
-	Sha     string          `edn:"git.commit/sha"`
-	Message string          `edn:"git.commit/message"`
-	Author  GitCommitAuthor `edn:"git.commit/author"`
-	Repo    GitRepo         `edn:"git.commit/repo"`
-}
-
-type GitCommitSignature struct {
+// OnCommitSignature maps the incoming commit signature of the on_commit_signature to a Go struct
+type OnCommitSignature struct {
 	Signature string      `edn:"git.commit.signature/signature"`
 	Reason    string      `edn:"git.commit.signature/reason"`
 	Status    edn.Keyword `edn:"git.commit.signature/status"`
 }
 
-// Mapping for entities that we want to transact
+// GitRepoEntity provides mappings for a :git/repo entity
 type GitRepoEntity struct {
 	EntityType edn.Keyword `edn:"schema/entity-type"`
 	Entity     string      `edn:"schema/entity,omitempty"`
@@ -58,6 +59,7 @@ type GitRepoEntity struct {
 	Url        string      `edn:"git.provider/url"`
 }
 
+// GitCommitEntity provides mappings for a :git/commit entity
 type GitCommitEntity struct {
 	EntityType edn.Keyword `edn:"schema/entity-type"`
 	Entity     string      `edn:"schema/entity,omitempty"`
@@ -66,6 +68,7 @@ type GitCommitEntity struct {
 	Url        string      `edn:"git.provider/url"`
 }
 
+// GitCommitSignatureEntity provides mappings for a :git.commit/signature entity
 type GitCommitSignatureEntity struct {
 	EntityType edn.Keyword `edn:"schema/entity-type"`
 	Entity     string      `edn:"schema/entity,omitempty"`

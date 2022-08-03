@@ -32,7 +32,7 @@ import (
 // as returned by GitHub
 func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skill.Status {
 	result := req.Event.Context.Subscription.Result[0]
-	commit := util.Decode[GitCommit](result[0])
+	commit := util.Decode[OnCommit](result[0])
 	gitCommit, err := getCommit(ctx, req, &commit)
 
 	if err != nil {
@@ -64,8 +64,8 @@ func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skil
 // the database and logs the signature
 func LogCommitSignature(ctx context.Context, req skill.RequestContext) skill.Status {
 	result := req.Event.Context.Subscription.Result[0]
-	commit := util.Decode[GitCommit](result[0])
-	signature := util.Decode[GitCommitSignature](result[1])
+	commit := util.Decode[OnCommit](result[0])
+	signature := util.Decode[OnCommitSignature](result[1])
 
 	req.Log.Infof("Commit %s is signed and verified by: %s", commit.Sha, signature.Signature)
 
@@ -88,7 +88,7 @@ func LogWebhookBody(ctx context.Context, req skill.RequestContext) skill.Status 
 }
 
 // transactCommitSignature transact the commit signature facts
-func transactCommitSignature(ctx context.Context, req skill.RequestContext, commit GitCommit, gitCommit *github.RepositoryCommit) error {
+func transactCommitSignature(ctx context.Context, req skill.RequestContext, commit OnCommit, gitCommit *github.RepositoryCommit) error {
 	var verified edn.Keyword
 	if *gitCommit.Commit.Verification.Verified {
 		verified = Verified
@@ -128,7 +128,7 @@ func transactCommitSignature(ctx context.Context, req skill.RequestContext, comm
 }
 
 // getCommit obtains commit information from GitHub
-func getCommit(ctx context.Context, req skill.RequestContext, commit *GitCommit) (*github.RepositoryCommit, error) {
+func getCommit(ctx context.Context, req skill.RequestContext, commit *OnCommit) (*github.RepositoryCommit, error) {
 	var client *github.Client
 
 	if commit.Repo.Org.InstallationToken != "" {
