@@ -18,7 +18,6 @@ package main
 
 import (
 	"context"
-	"log"
 	"reflect"
 	"testing"
 
@@ -41,18 +40,10 @@ func TestProcessCommit(t *testing.T) {
 	}
 	req := skill.RequestContext{
 		Log: skill.Logger{
-			Debug: func(msg string) {
-				log.Print(msg)
-			},
-			Debugf: func(format string, a ...any) {
-				log.Printf(format, a...)
-			},
-			Info: func(msg string) {
-				log.Print(msg)
-			},
-			Infof: func(format string, a ...any) {
-				log.Printf(format, a...)
-			},
+			Debug:  func(msg string) { t.Log(msg) },
+			Debugf: t.Logf,
+			Info:   func(msg string) { t.Log(msg) },
+			Infof:  t.Logf,
 		},
 		Transact: func(entities interface{}) error {
 			switch reflect.TypeOf(entities).Kind() {
