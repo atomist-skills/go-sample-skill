@@ -39,16 +39,20 @@ type OnCommit struct {
 		SourceId string `edn:"git.repo/source-id"`
 	} `edn:"git.commit/repo"`
 	Refs []struct {
-		Name string      `edn:"git.ref/name"`
-		Type edn.Keyword `edn:"git.ref/type"`
+		Name string `edn:"git.ref/name"`
+		Type struct {
+			Ident edn.Keyword `edn:"db/ident"`
+		} `edn:"git.ref/type"`
 	} `edn:"git.ref/refs"`
 }
 
 // OnCommitSignature maps the incoming commit signature of the on_commit_signature to a Go struct
 type OnCommitSignature struct {
-	Signature string      `edn:"git.commit.signature/signature"`
-	Reason    string      `edn:"git.commit.signature/reason"`
-	Status    edn.Keyword `edn:"git.commit.signature/status"`
+	Signature string `edn:"git.commit.signature/signature"`
+	Reason    string `edn:"git.commit.signature/reason"`
+	Status    struct {
+		Ident edn.Keyword `edn:"db/ident"`
+	} `edn:"git.commit.signature/status"`
 }
 
 // GitRepoEntity provides mappings for a :git/repo entity
