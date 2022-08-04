@@ -1,5 +1,5 @@
 # build stage
-FROM golang:1.18-alpine@sha256:dda10a0c69473a595ab11ed3f8305bf4d38e0436b80e1462fb22c9d8a1c1e808 as build
+FROM golang:1.19-alpine3.16 as build
 
 RUN apk add --no-cache git build-base
 
@@ -16,11 +16,12 @@ RUN go test
 RUN go build
 
 # runtime stage
-FROM golang:1.18-alpine@sha256:dda10a0c69473a595ab11ed3f8305bf4d38e0436b80e1462fb22c9d8a1c1e808
+FROM golang:1.19-alpine3.16
 
 LABEL com.docker.skill.api.version="container/v2"
 COPY skill.yaml /
 COPY datalog /datalog
+COPY docs/images/icon.svg /icon.svg
 
 WORKDIR /skill
 COPY --from=build /app/go-sample-skill .
