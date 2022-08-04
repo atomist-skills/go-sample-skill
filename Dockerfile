@@ -1,5 +1,5 @@
 # build stage
-FROM golang:1.19-alpine3.16 as build
+FROM golang:1.19-alpine3.16@sha256:f8e128fa8aa891fe29e22e6401686dffef9bd4c3f5b552b09a7c29f7379979c1 as build
 
 RUN apk add --no-cache git build-base
 
