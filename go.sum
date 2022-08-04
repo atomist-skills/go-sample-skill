@@ -35,6 +35,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/atomist-skills/go-skill v0.0.6-0.20220804110434-02a0b291dffa h1:0R7MiEoEldsBenvH+TfWu8ToKcTBVyB6HuxbP+W9cZE=
 github.com/atomist-skills/go-skill v0.0.6-0.20220804110434-02a0b291dffa/go.mod h1:R/DINzTmoP3kmFf656H4O83f3EFVW3fNh3IaA/hi61Y=
+github.com/atomist-skills/go-skill v0.0.6-0.20220804113817-a28843bb4057 h1:8ooWikDr32OQ04YPxWXok3PlkUR3KN2hsGehlmoWAq0=
+github.com/atomist-skills/go-skill v0.0.6-0.20220804113817-a28843bb4057/go.mod h1:dn8GSaB1FBuK7yeRlQZ2mpDhVUKB8c0WZAw8wJ9FktI=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
