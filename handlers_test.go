@@ -68,20 +68,24 @@ func TestProcessCommit(t *testing.T) {
 
 				repoEntity := s.Index(0).Interface().(GitRepoEntity)
 				if !reflect.DeepEqual(repoEntity, GitRepoEntity{
-					EntityType: edn.Keyword("git/repo"),
-					Entity:     "$repo",
-					SourceId:   "123456",
-					Url:        "https://github.com/",
+					Entity: skill.Entity{
+						EntityType: edn.Keyword("git/repo"),
+						Entity:     "$repo",
+					},
+					SourceId: "123456",
+					Url:      "https://github.com/",
 				}) {
 					t.Errorf("Repo entity not expected")
 				}
 				commitEntity := s.Index(1).Interface().(GitCommitEntity)
 				if !reflect.DeepEqual(commitEntity, GitCommitEntity{
-					EntityType: edn.Keyword("git/commit"),
-					Entity:     "$commit",
-					Repo:       "$repo",
-					Sha:        commit.Sha,
-					Url:        "https://github.com/",
+					Entity: skill.Entity{
+						EntityType: edn.Keyword("git/commit"),
+						Entity:     "$commit",
+					},
+					Repo: "$repo",
+					Sha:  commit.Sha,
+					Url:  "https://github.com/",
 				}) {
 					t.Errorf("Commit entity not expected")
 				}

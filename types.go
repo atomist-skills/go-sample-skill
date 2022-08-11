@@ -17,6 +17,7 @@
 package main
 
 import (
+	"github.com/atomist-skills/go-skill"
 	"olympos.io/encoding/edn"
 )
 
@@ -57,29 +58,26 @@ type OnCommitSignature struct {
 
 // GitRepoEntity provides mappings for a :git/repo entity
 type GitRepoEntity struct {
-	EntityType edn.Keyword `edn:"schema/entity-type"`
-	Entity     string      `edn:"schema/entity,omitempty"`
-	SourceId   string      `edn:"git.repo/source-id"`
-	Url        string      `edn:"git.provider/url"`
+	skill.Entity
+	SourceId string `edn:"git.repo/source-id"`
+	Url      string `edn:"git.provider/url"`
 }
 
 // GitCommitEntity provides mappings for a :git/commit entity
 type GitCommitEntity struct {
-	EntityType edn.Keyword `edn:"schema/entity-type"`
-	Entity     string      `edn:"schema/entity,omitempty"`
-	Sha        string      `edn:"git.commit/sha"`
-	Repo       string      `edn:"git.commit/repo"`
-	Url        string      `edn:"git.provider/url"`
+	skill.Entity
+	Sha  string `edn:"git.commit/sha"`
+	Repo string `edn:"git.commit/repo"`
+	Url  string `edn:"git.provider/url"`
 }
 
 // GitCommitSignatureEntity provides mappings for a :git.commit/signature entity
 type GitCommitSignatureEntity struct {
-	EntityType edn.Keyword `edn:"schema/entity-type"`
-	Entity     string      `edn:"schema/entity,omitempty"`
-	Commit     string      `edn:"git.commit.signature/commit"`
-	Signature  string      `edn:"git.commit.signature/signature,omitempty"`
-	Reason     string      `edn:"git.commit.signature/reason,omitempty"`
-	Status     edn.Keyword `edn:"git.commit.signature/status,omitempty"`
+	skill.Entity
+	Commit    string      `edn:"git.commit.signature/commit"`
+	Signature string      `edn:"git.commit.signature/signature,omitempty"`
+	Reason    string      `edn:"git.commit.signature/reason,omitempty"`
+	Status    edn.Keyword `edn:"git.commit.signature/status,omitempty"`
 }
 
 const (

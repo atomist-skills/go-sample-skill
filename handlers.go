@@ -101,24 +101,27 @@ func transactCommitSignature(ctx context.Context, req skill.RequestContext, comm
 		signature = *verification.Signature
 	}
 
-	err := req.Transact([]any{GitRepoEntity{
-		EntityType: "git/repo",
-		Entity:     "$repo",
-		SourceId:   commit.Repo.SourceId,
-		Url:        commit.Repo.Org.Url,
+	transaction := skill.NewTransaction()
+
+	transaction.AddEntities(GitRepoEntity{
+		Entity:   transaction.MakeEntity("git/repo", "$repo"),
+		SourceId: commit.Repo.SourceId,
+		Url:      commit.Repo.Org.Url,
 	}, GitCommitEntity{
-		EntityType: "git/commit",
-		Entity:     "$commit",
-		Sha:        commit.Sha,
-		Repo:       "$repo",
-		Url:        commit.Repo.Org.Url,
+		Entity: transaction.MakeEntity("git/commit", "$commit"),
+		Sha:    commit.Sha,
+		Repo:   "$repo",
+		Url:    commit.Repo.Org.Url,
 	}, GitCommitSignatureEntity{
-		EntityType: "git.commit/signature",
-		Commit:     "$commit",
-		Signature:  signature,
-		Status:     verified,
-		Reason:     *gitCommit.Commit.Verification.Reason,
-	}})
+		Entity:    transaction.MakeEntity("git.commit/signature"),
+		Commit:    "$commit",
+		Signature: signature,
+		Status:    verified,
+		Reason:    *gitCommit.Commit.Verification.Reason,
+	})
+
+	err := req.Transact(transaction.Entities())
+
 	if err != nil {
 		return err
 	}
