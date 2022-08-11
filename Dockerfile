@@ -13,7 +13,7 @@ RUN go mod download
 COPY . ./
 
 RUN go test
-RUN go build
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s"
 
 # runtime stage
 FROM scratch
@@ -24,6 +24,6 @@ COPY datalog /datalog
 COPY docs/images/icon.svg /icon.svg
 
 WORKDIR /skill
-COPY --from=build /app/go-sample-skill .
+COPY --from=build /app/go-sample-skill /skill/go-sample-skill
 
 ENTRYPOINT ["/skill/go-sample-skill"]
