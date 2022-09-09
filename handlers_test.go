@@ -62,34 +62,36 @@ func TestProcessCommit(t *testing.T) {
 			switch reflect.TypeOf(entities).Kind() {
 			case reflect.Slice:
 				s := reflect.ValueOf(entities)
-				if s.Len() != 3 {
+				if s.Len() != 1 {
 					t.Errorf("Expected 3 entities, got %d", s.Len())
 				}
 
-				repoEntity := s.Index(0).Interface().(GitRepoEntity)
-				if !reflect.DeepEqual(repoEntity, GitRepoEntity{
+				assertRepoEntity := GitRepoEntity{
 					Entity: skill.Entity{
 						EntityType: edn.Keyword("git/repo"),
-						Entity:     "$repo",
 					},
 					SourceId: "123456",
 					Url:      "https://github.com/",
-				}) {
-					t.Errorf("Repo entity not expected")
 				}
-				commitEntity := s.Index(1).Interface().(GitCommitEntity)
+				commitSignatureEntity := s.Index(0).Interface().(GitCommitSignatureEntity)
+				commitEntity := commitSignatureEntity.Commit
+				commitEntity.Entity.Entity = ""
+				commitEntity.Repo.Entity.Entity = ""
 				if !reflect.DeepEqual(commitEntity, GitCommitEntity{
 					Entity: skill.Entity{
 						EntityType: edn.Keyword("git/commit"),
-						Entity:     "$commit",
 					},
-					Repo: "$repo",
+					Repo: assertRepoEntity,
 					Sha:  commit.Sha,
 					Url:  "https://github.com/",
 				}) {
-					t.Errorf("Commit entity not expected")
+					t.Errorf("Commit entity as not expected")
 				}
-				commitSignatureEntity := s.Index(2).Interface().(GitCommitSignatureEntity)
+				repoEntity := commitSignatureEntity.Commit.Repo
+				repoEntity.Entity.Entity = ""
+				if !reflect.DeepEqual(repoEntity, assertRepoEntity) {
+					t.Errorf("Repo entity not  as expected")
+				}
 				if !(commitSignatureEntity.Signature != "" && commitSignatureEntity.Reason == "valid") {
 					t.Errorf("Signature entity not expected")
 				}

@@ -66,18 +66,18 @@ type GitRepoEntity struct {
 // GitCommitEntity provides mappings for a :git/commit entity
 type GitCommitEntity struct {
 	skill.Entity
-	Sha  string `edn:"git.commit/sha"`
-	Repo string `edn:"git.commit/repo"`
-	Url  string `edn:"git.provider/url"`
+	Sha  string        `edn:"git.commit/sha"`
+	Repo GitRepoEntity `edn:"git.commit/repo"`
+	Url  string        `edn:"git.provider/url"`
 }
 
 // GitCommitSignatureEntity provides mappings for a :git.commit/signature entity
 type GitCommitSignatureEntity struct {
 	skill.Entity
-	Commit    string      `edn:"git.commit.signature/commit"`
-	Signature string      `edn:"git.commit.signature/signature,omitempty"`
-	Reason    string      `edn:"git.commit.signature/reason,omitempty"`
-	Status    edn.Keyword `edn:"git.commit.signature/status,omitempty"`
+	Commit    GitCommitEntity `edn:"git.commit.signature/commit"`
+	Signature string          `edn:"git.commit.signature/signature,omitempty"`
+	Reason    string          `edn:"git.commit.signature/reason,omitempty"`
+	Status    edn.Keyword     `edn:"git.commit.signature/status,omitempty"`
 }
 
 const (
