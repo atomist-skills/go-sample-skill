@@ -34,3 +34,11 @@ skill:
         required: false
         authorizationTypes:
           - httpBasic
+
+  # parameter values for local testing
+  parameterValues:
+    - webhook:
+        name: on_webhook
+        value:
+          - name: webhook-0
+        
