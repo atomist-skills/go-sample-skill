@@ -36,59 +36,43 @@ func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skil
 	gitCommit, err := getCommit(ctx, req, &commit)
 
 	if err != nil {
-		return skill.Status{
-			State: skill.Failed,
-			Reason: fmt.Sprintf("Failed to obtain commit signature for %s",
+		return skill.NewFailedStatus(fmt.Sprintf("Failed to obtain commit signature for %s",
 
-				commit.Sha),
-		}
+			commit.Sha))
 	}
 
 	err = transactCommitSignature(ctx, req, commit, gitCommit)
 	if err != nil {
-		return skill.Status{
-			State: skill.Failed,
-			Reason: fmt.Sprintf("Failed to transact signature for %s",
+		return skill.NewFailedStatus(fmt.Sprintf("Failed to transact signature for %s",
 
-				commit.Sha),
-		}
+			commit.Sha))
 	}
 
-	return skill.Status{
-		State:  skill.Completed,
-		Reason: fmt.Sprintf("Successfully transacted commit signature for %d commit", len(req.Event.Context.Subscription.Result)),
-	}
+	return skill.NewCompletedStatus(fmt.Sprintf("Successfully transacted commit signature for %d commit", len(req.Event.Context.Subscription.Result)))
 }
 
 // LogCommitSignature handles new commit signature entities as they are transacted into
 // the database and logs the signature
-func LogCommitSignature(ctx context.Context, req skill.RequestContext) skill.Status {
+func LogCommitSignature(_ context.Context, req skill.RequestContext) skill.Status {
 	result := req.Event.Context.Subscription.Result[0]
 	commit := util.Decode[OnCommit](result[0])
 	signature := util.Decode[OnCommitSignature](result[1])
 
 	req.Log.Infof("Commit %s is signed and verified by: %s", commit.Sha, signature.Signature)
-
-	return skill.Status{
-		State:  skill.Completed,
-		Reason: "Detected signed and verified commit",
-	}
+	return skill.NewCompletedStatus("Detected signed and verified commit")
 }
 
 // LogWebhookBody logs incoming webhook bodies
-func LogWebhookBody(ctx context.Context, req skill.RequestContext) skill.Status {
+func LogWebhookBody(_ context.Context, req skill.RequestContext) skill.Status {
 	body := req.Event.Context.Webhook.Request.Body
 
 	req.Log.Infof("Webhook body: %s", body)
 
-	return skill.Status{
-		State:  skill.Completed,
-		Reason: "Handled incoming webhook event",
-	}
+	return skill.NewCompletedStatus("Handled incoming webhook event")
 }
 
 // transactCommitSignature transact the commit signature facts
-func transactCommitSignature(ctx context.Context, req skill.RequestContext, commit OnCommit, gitCommit *github.RepositoryCommit) error {
+func transactCommitSignature(_ context.Context, req skill.RequestContext, commit OnCommit, gitCommit *github.RepositoryCommit) error {
 	var verified edn.Keyword
 	if *gitCommit.Commit.Verification.Verified {
 		verified = Verified
@@ -131,7 +115,7 @@ func transactCommitSignature(ctx context.Context, req skill.RequestContext, comm
 }
 
 // getCommit obtains commit information from GitHub
-func getCommit(ctx context.Context, req skill.RequestContext, commit *OnCommit) (*github.RepositoryCommit, error) {
+func getCommit(ctx context.Context, _ skill.RequestContext, commit *OnCommit) (*github.RepositoryCommit, error) {
 	var client *github.Client
 
 	if commit.Repo.Org.InstallationToken != "" {

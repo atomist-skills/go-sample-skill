@@ -82,5 +82,5 @@ type GitCommitSignatureEntity struct {
 
 const (
 	Verified    edn.Keyword = "git.commit.signature/VERIFIED"
-	NotVerified             = "git.commit.signature/NOT_VERIFIED"
+	NotVerified edn.Keyword = "git.commit.signature/NOT_VERIFIED"
 )
