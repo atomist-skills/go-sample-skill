@@ -18,12 +18,13 @@ package main
 
 import (
 	"context"
+	"reflect"
+	"testing"
+
 	"github.com/atomist-skills/go-skill"
 	"github.com/atomist-skills/go-skill/test"
 	"github.com/atomist-skills/go-skill/util"
 	"olympos.io/encoding/edn"
-	"reflect"
-	"testing"
 )
 
 func TestSimulateOnPush(t *testing.T) {
