@@ -33,16 +33,10 @@ cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
-github.com/atomist-skills/go-skill v0.0.6-0.20220811084319-ff07e4932014 h1:WVhfJVYEsXEzC4bor+FXxpPUACe4IJ595vX+TxcGDxw=
-github.com/atomist-skills/go-skill v0.0.6-0.20220811084319-ff07e4932014/go.mod h1:ajdxtwJhNhOabOcnExQA7ZkYgojV5X15o9HsM8PLaV4=
-github.com/atomist-skills/go-skill v0.0.6-0.20220909100321-db77942ad598 h1:jSPxR+Dr/5MRHjpgxFpOneOIYAtndzJLsc6xAaOSZ/8=
-github.com/atomist-skills/go-skill v0.0.6-0.20220909100321-db77942ad598/go.mod h1:mNoVITYKBogxE1YJpprKOj+1MLobwnbLsejAdQ3Y8SA=
-github.com/atomist-skills/go-skill v0.0.6-0.20220924140349-6e92b45323a5 h1:xjT2eFZeU7TOGXq4pBJGpCaNX29GpS4TGzHwqBDnktg=
-github.com/atomist-skills/go-skill v0.0.6-0.20220924140349-6e92b45323a5/go.mod h1:mNoVITYKBogxE1YJpprKOj+1MLobwnbLsejAdQ3Y8SA=
-github.com/atomist-skills/go-skill v0.0.6-0.20220924140853-e8db6d9ed77d h1:XhTKJKW4alv8uXU6L9LF19dErFFwpbR2FAESdgQxWug=
-github.com/atomist-skills/go-skill v0.0.6-0.20220924140853-e8db6d9ed77d/go.mod h1:mNoVITYKBogxE1YJpprKOj+1MLobwnbLsejAdQ3Y8SA=
 github.com/atomist-skills/go-skill v0.0.6-0.20220924142142-0aaae27a1c1a h1:5w+7XibikY5CjD+l1xTbkAlJmhh7M0DLoBABaeHA0EU=
 github.com/atomist-skills/go-skill v0.0.6-0.20220924142142-0aaae27a1c1a/go.mod h1:mNoVITYKBogxE1YJpprKOj+1MLobwnbLsejAdQ3Y8SA=
+github.com/atomist-skills/go-skill v0.0.6-0.20220924142757-160a77d490f2 h1:080/kmxHEB2G6Yi6EqF3iFCzu0UxJ1hEzOicb3pNmKw=
+github.com/atomist-skills/go-skill v0.0.6-0.20220924142757-160a77d490f2/go.mod h1:mNoVITYKBogxE1YJpprKOj+1MLobwnbLsejAdQ3Y8SA=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
@@ -95,7 +89,6 @@ github.com/google/go-cmp v0.5.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/go-cmp v0.5.1/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
-github.com/google/go-cmp v0.5.8 h1:e6P7q2lk1O+qJJb4BtCQXlK8vWEO8V1ZeuEdJNOqZyg=
 github.com/google/go-github/v45 v45.1.0 h1:SbUjHMRiCe9cHfu6Me4idWxLQEV8ZW9DLPz69zopyWo=
 github.com/google/go-github/v45 v45.1.0/go.mod h1:FObaZJEDSTa/WGCzZ2Z3eoCDXWJKMenWWTrd8jrta28=
 github.com/google/go-querystring v1.1.0 h1:AnCroh3fv4ZBgVIf1Iwtovgjaw/GiKJo8M8yD/fhyJ8=
