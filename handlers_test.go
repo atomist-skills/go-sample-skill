@@ -18,12 +18,42 @@ package main
 
 import (
 	"context"
+	"github.com/atomist-skills/go-skill"
+	"github.com/atomist-skills/go-skill/test"
+	"github.com/atomist-skills/go-skill/util"
+	"olympos.io/encoding/edn"
 	"reflect"
 	"testing"
-
-	"github.com/atomist-skills/go-skill"
-	"olympos.io/encoding/edn"
 )
+
+func TestSimulateOnPush(t *testing.T) {
+	result := test.Simulate(test.SimulateOptions{
+		Skill: skill.Skill{
+			Id:        "cada301c-0e75-11ed-861d-0242ac120002",
+			Namespace: "atomist",
+			Name:      "go-sample-skill",
+			Version:   "0.0.1",
+		},
+		Subscription: "datalog/subscription/on_push.edn",
+		Schemata:     "datalog/schema/commit_signature.edn",
+		TxData:       "testdata/datalog/transaction/push.edn",
+		Configuration: skill.Configuration{
+			Name: "default",
+		},
+	}, t)
+
+	if result.Results[0].Subscription != "on_push" {
+		t.Errorf("Expected different subscription match")
+	}
+	if c := len(result.Results[0].Results); c != 1 {
+		t.Errorf("Expecting 1 commit result; instead received %d", c)
+	}
+
+	commit := util.Decode[GitCommitEntity](result.Results[0].Results[0][0])
+	if commit.Sha != "8976e7077a86e2755486eb136103b26cef5c78d7" {
+		t.Errorf("Expecting different sha; instead got %s", commit.Sha)
+	}
+}
 
 func TestProcessCommit(t *testing.T) {
 	commit := OnCommit{
