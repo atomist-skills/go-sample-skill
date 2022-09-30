@@ -85,7 +85,7 @@ func transactCommitSignature(_ context.Context, req skill.RequestContext, commit
 		signature = *verification.Signature
 	}
 
-	transaction := skill.NewTransaction()
+	transaction := req.NewTransaction(false)
 
 	transaction.AddEntities(GitCommitSignatureEntity{
 		Entity: transaction.MakeEntity("git.commit/signature"),
@@ -104,7 +104,7 @@ func transactCommitSignature(_ context.Context, req skill.RequestContext, commit
 		Reason:    *gitCommit.Commit.Verification.Reason,
 	})
 
-	err := req.Transact(transaction.Entities())
+	err := transaction.Transact()
 
 	if err != nil {
 		return err

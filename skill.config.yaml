@@ -1,0 +1,7 @@
+- name: local test1
+  enabled: true
+  parameters:
+    - webhook:
+        name: on_webhook
+        value:
+          - name: webhook-0
