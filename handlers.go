@@ -36,16 +36,12 @@ func TransactCommitSignature(ctx context.Context, req skill.RequestContext) skil
 	gitCommit, err := getCommit(ctx, req, &commit)
 
 	if err != nil {
-		return skill.NewFailedStatus(fmt.Sprintf("Failed to obtain commit signature for %s",
-
-			commit.Sha))
+		return skill.NewFailedStatus(fmt.Sprintf("Failed to obtain commit signature for %s", commit.Sha))
 	}
 
 	err = transactCommitSignature(ctx, req, commit, gitCommit)
 	if err != nil {
-		return skill.NewFailedStatus(fmt.Sprintf("Failed to transact signature for %s",
-
-			commit.Sha))
+		return skill.NewFailedStatus(fmt.Sprintf("Failed to transact signature for %s", commit.Sha))
 	}
 
 	return skill.NewCompletedStatus(fmt.Sprintf("Successfully transacted commit signature for %d commit", len(req.Event.Context.Subscription.Result)))
@@ -85,15 +81,10 @@ func transactCommitSignature(_ context.Context, req skill.RequestContext, commit
 		signature = *verification.Signature
 	}
 
-	transaction := req.NewTransaction(false)
-
-	transaction.AddEntities(GitCommitSignatureEntity{
-		Entity: transaction.MakeEntity("git.commit/signature"),
+	err := req.NewTransaction().AddEntities(GitCommitSignatureEntity{
 		Commit: GitCommitEntity{
-			Entity: transaction.MakeEntity("git/commit"),
-			Sha:    commit.Sha,
+			Sha: commit.Sha,
 			Repo: GitRepoEntity{
-				Entity:   transaction.MakeEntity("git/repo"),
 				SourceId: commit.Repo.SourceId,
 				Url:      commit.Repo.Org.Url,
 			},
@@ -102,16 +93,13 @@ func transactCommitSignature(_ context.Context, req skill.RequestContext, commit
 		Signature: signature,
 		Status:    verified,
 		Reason:    *gitCommit.Commit.Verification.Reason,
-	})
-
-	err := transaction.Transact()
-
+	}).Transact()
 	if err != nil {
 		return err
 	}
 
 	req.Log.Infof("Transacted commit signature for %s", commit.Sha)
-	return err
+	return nil
 }
 
 // getCommit obtains commit information from GitHub

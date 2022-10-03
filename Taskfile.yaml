@@ -1,0 +1,35 @@
+version: '3'
+
+vars:
+  IMAGE_NAME: atomist-skills/go-sample-skill:local
+
+tasks:
+  go:build:
+    cmds:
+      - go build -ldflags="-w -s"
+    env:
+      CGO_ENABLED: 0
+
+  go:fmt:
+    cmds:
+      - goimports -w .
+      - gofmt -w .
+      - go mod tidy
+
+  go:run:
+    deps: [go:build]
+    cmds:
+      - ./go-sample-skill
+
+  docker:build:
+    cmds:
+      - docker buildx build . -f Dockerfile -t {{.IMAGE_NAME}} --load
+
+  docker:build:all:
+    cmds:
+      - docker buildx build . -f Dockerfile -t {{.IMAGE_NAME}} --platform=linux/amd64,linux/arm64
+
+  docker:run:
+    deps: [docker:build]
+    cmds:
+      - docker run -it ${{ .IMAGE_NAME }}

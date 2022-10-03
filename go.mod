@@ -3,7 +3,7 @@ module go-sample-skill
 go 1.18
 
 require (
-	github.com/atomist-skills/go-skill v0.0.6-0.20220930080122-5d72d10932d9
+	github.com/atomist-skills/go-skill v0.0.6-0.20221003172518-c3d268e1f3f1
 	github.com/google/go-github/v45 v45.1.0
 	golang.org/x/oauth2 v0.0.0-20220608161450-d0670ef3b1eb
 	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3

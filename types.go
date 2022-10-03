@@ -58,26 +58,26 @@ type OnCommitSignature struct {
 
 // GitRepoEntity provides mappings for a :git/repo entity
 type GitRepoEntity struct {
-	skill.Entity
-	SourceId string `edn:"git.repo/source-id"`
-	Url      string `edn:"git.provider/url"`
+	skill.Entity `entity-type:"git/repo"`
+	SourceId     string `edn:"git.repo/source-id"`
+	Url          string `edn:"git.provider/url"`
 }
 
 // GitCommitEntity provides mappings for a :git/commit entity
 type GitCommitEntity struct {
-	skill.Entity
-	Sha  string        `edn:"git.commit/sha"`
-	Repo GitRepoEntity `edn:"git.commit/repo"`
-	Url  string        `edn:"git.provider/url"`
+	skill.Entity `entity-type:"git/commit"`
+	Sha          string        `edn:"git.commit/sha"`
+	Repo         GitRepoEntity `edn:"git.commit/repo"`
+	Url          string        `edn:"git.provider/url"`
 }
 
 // GitCommitSignatureEntity provides mappings for a :git.commit/signature entity
 type GitCommitSignatureEntity struct {
-	skill.Entity
-	Commit    GitCommitEntity `edn:"git.commit.signature/commit"`
-	Signature string          `edn:"git.commit.signature/signature,omitempty"`
-	Reason    string          `edn:"git.commit.signature/reason,omitempty"`
-	Status    edn.Keyword     `edn:"git.commit.signature/status,omitempty"`
+	skill.Entity `entity-type:"git.commit/signature"`
+	Commit       GitCommitEntity `edn:"git.commit.signature/commit"`
+	Signature    string          `edn:"git.commit.signature/signature,omitempty"`
+	Reason       string          `edn:"git.commit.signature/reason,omitempty"`
+	Status       edn.Keyword     `edn:"git.commit.signature/status,omitempty"`
 }
 
 const (
