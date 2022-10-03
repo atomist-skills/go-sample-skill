@@ -98,7 +98,7 @@ jobs:
       - name: Extract and upload SBOM
         if: ${{ github.event_name == 'pull_request' }}
         id: sbom
-        uses: atomist-skills/index-image-action@ce3cbd03871b49e4821ed65ccb8d41656a0065a8
+        uses: atomist-skills/index-image-action@main
         with:
           image: ${{ steps.meta.outputs.tags }}
           api-key: ${{ secrets.ATOMIST_API_KEY }}
