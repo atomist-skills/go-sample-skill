@@ -33,16 +33,6 @@ cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
-github.com/atomist-skills/go-skill v0.0.6-0.20220930080122-5d72d10932d9 h1:WhfRcKjfJ3h9+DHMTmdheAi7olizcQ1vVs7USEq5Zd4=
-github.com/atomist-skills/go-skill v0.0.6-0.20220930080122-5d72d10932d9/go.mod h1:DRmwrZL5kG68Mn8VDw/Xr7rDhyl+laD7NFHIrQr54yo=
-github.com/atomist-skills/go-skill v0.0.6-0.20220930120039-ed4584830e40 h1:51wVW0b2tNp69mFRHfRhK9sbu0nTugGChsnP2b1MlG4=
-github.com/atomist-skills/go-skill v0.0.6-0.20220930120039-ed4584830e40/go.mod h1:DRmwrZL5kG68Mn8VDw/Xr7rDhyl+laD7NFHIrQr54yo=
-github.com/atomist-skills/go-skill v0.0.6-0.20220930200206-8a0a2d751ef7 h1:AruPWZx74vw2Kh03Q3b8YaLKbC12MHhJkYvsGozQMjo=
-github.com/atomist-skills/go-skill v0.0.6-0.20220930200206-8a0a2d751ef7/go.mod h1:DRmwrZL5kG68Mn8VDw/Xr7rDhyl+laD7NFHIrQr54yo=
-github.com/atomist-skills/go-skill v0.0.6-0.20221001161923-275d3c106303 h1:/PcIGd+I5PvpsYWZMSecel0gMzPKIcFIjIdRMxOJSSA=
-github.com/atomist-skills/go-skill v0.0.6-0.20221001161923-275d3c106303/go.mod h1:DRmwrZL5kG68Mn8VDw/Xr7rDhyl+laD7NFHIrQr54yo=
-github.com/atomist-skills/go-skill v0.0.6-0.20221003172338-03dc92a92021 h1:JEtf8QloGOnO6iXg8dKQalPF8gX32FEOeBxyfwgYKRk=
-github.com/atomist-skills/go-skill v0.0.6-0.20221003172338-03dc92a92021/go.mod h1:DRmwrZL5kG68Mn8VDw/Xr7rDhyl+laD7NFHIrQr54yo=
 github.com/atomist-skills/go-skill v0.0.6-0.20221003172518-c3d268e1f3f1 h1:EzSOh9LLtL/3IzbPUFSp/6OF4DrgiCPxCC3x3jjD9Bs=
 github.com/atomist-skills/go-skill v0.0.6-0.20221003172518-c3d268e1f3f1/go.mod h1:DRmwrZL5kG68Mn8VDw/Xr7rDhyl+laD7NFHIrQr54yo=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
