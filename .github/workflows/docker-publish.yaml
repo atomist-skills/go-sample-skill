@@ -90,6 +90,12 @@ jobs:
           registry_user: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
       
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: image.sarif.json          
+      
       # Extract SBOMs for images that are not getting pushed to the registry
       - name: Extract and upload SBOM
         if: ${{ github.event_name == 'pull_request' }}
