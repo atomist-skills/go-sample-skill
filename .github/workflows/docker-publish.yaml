@@ -78,7 +78,7 @@ jobs:
           provenance: true
 
       - name: Create CVE report
-        uses: atomist-skills/scout-action@main
+        uses: atomist-skills/scout-action@8ae0438
         with:
           image: ${{ steps.meta.outputs.tags }}
           user: ${{ secrets.DOCKER_HUB_USER }}
