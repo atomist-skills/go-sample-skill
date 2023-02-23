@@ -78,7 +78,7 @@ jobs:
           provenance: true
 
       - name: Create CVE report
-        uses: atomist-skills/scout-action@6e77d710bfba912f539fda87035a4f968ec5aa06
+        uses: atomist-skills/scout-action@75b83ba91699757d202400468e29a3630e70964b
         with:
           image: ${{ steps.meta.outputs.tags }}
           user: ${{ secrets.DOCKER_HUB_USER }}
@@ -86,9 +86,6 @@ jobs:
           registry_user: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Print sarif file
-        run: cat image.sarif.json
-      
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
         with:
