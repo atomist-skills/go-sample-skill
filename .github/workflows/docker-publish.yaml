@@ -99,7 +99,7 @@ jobs:
         with:
           image: ${{ steps.meta.outputs.tags }}
           user: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
       
       # Extract SBOMs for images that are not getting pushed to the registry
       - name: Extract and upload SBOM
