@@ -93,7 +93,12 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
-
+      
+      - name: Create CVE report
+        uses: atomist-skills/scout-action@main
+        with:
+          image: foo
+      
       # Extract SBOMs for images that are not getting pushed to the registry
       - name: Extract and upload SBOM
         if: ${{ github.event_name == 'pull_request' }}
