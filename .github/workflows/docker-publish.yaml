@@ -74,7 +74,7 @@ jobs:
           load: ${{ github.event_name == 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          sbom: true
+          attests: type=sbom,generator=christiandupuis299/buildkit-syft-scanner:files
           provenance: true
 
       - name: Create CVE report
