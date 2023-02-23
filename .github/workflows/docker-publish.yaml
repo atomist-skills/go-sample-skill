@@ -85,6 +85,9 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           registry_user: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Print sarif file
+        run: cat image.sarif.json
       
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
