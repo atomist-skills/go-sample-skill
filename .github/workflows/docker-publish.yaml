@@ -78,7 +78,7 @@ jobs:
           provenance: true
 
       - name: Create CVE report
-        uses: atomist-skills/scout-action@528dae9a985aa0e74837b896ed46fedc538c69fe
+        uses: atomist-skills/scout-action@71a7ce690710d2678fa1f01a6f545e8f0d3faa5f
         with:
           command: cves
           image: ${{ steps.meta.outputs.tags }}
