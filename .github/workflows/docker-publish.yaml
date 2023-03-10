@@ -93,11 +93,44 @@ jobs:
         with:
           # Path to SARIF file relative to the root of the repository
           sarif_file: image.sarif.json     
-          
-          
-          
-          
-          
+      
+      - name: Scan Vulnerabilities
+        run: |
+          cat image.sarif.json | \
+          jq '{ critical: [select(.runs[-1].results[].message.text  | contains(": CRITICAL"))] | length, high: [select(.runs[-1].results[].message.text  | contains(": HIGH"))] | length, medium: [select(.runs[-1].results[].message.text  | contains(": MEDIUM"))] | length, low: [select(.runs[-1].results[].message.text  | contains(": LOW"))] | length }' > \
+          vulnerabilities.json
+      
+      - name: GH Actions Summary
+        shell: python
+        run: |
+          import json
+          import os
+
+
+          css_critical_color = "ab1a1a"
+          css_high_color = "ce5019"
+          css_medium_color = "d68000"
+          css_low_color = "88879e"
+
+          with open("vulnerabilities.json") as fh:
+              vulnerabilities = json.load(fh)
+
+          critical = vulnerabilities.get("critical", 0)
+          high = vulnerabilities.get("high", 0)
+          medium = vulnerabilities.get("medium", 0)
+          low = vulnerabilities.get("low", 0)
+
+          # Shields.io Badges
+          SHIELDSIO_BADGES = f"![Critical](https://img.shields.io/badge/Critical-{critical}-{css_critical_color}.svg) \
+          ![High](https://img.shields.io/badge/High-{high}-{css_high_color}.svg) \
+          ![Medium](https://img.shields.io/badge/Medium-{medium}-{css_medium_color}.svg) \
+          ![Low](https://img.shields.io/badge/Low-{low}-{css_low_color}.svg)"
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as fh:
+              print("# Vulnerabilities", file=fh)
+              print(SHIELDSIO_BADGES, file=fh)
+
+       
           
           
           
