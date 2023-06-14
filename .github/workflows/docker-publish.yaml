@@ -76,7 +76,7 @@ jobs:
           load: ${{ github.event_name == 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          attests: true
+          sbom: true
           provenance: true
 
       - name: Create CVE report
