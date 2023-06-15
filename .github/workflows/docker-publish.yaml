@@ -80,26 +80,26 @@ jobs:
           load: ${{ github.event_name == 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
+          #platforms: linux/amd64,linux/arm64
           sbom: true
           provenance: true
 
-      - name: Create CVE report
-        uses: docker/scout-action@ca09af31fdb99995a36608d63aba7b5e4f66709a
-        with:
-          command: cves
-          image: ${{ steps.meta.outputs.tags }}
-          args: '--output image.sarif.json --format sarif' 
-          user: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          registry_user: ${{ github.actor }}
-          registry_password: ${{ secrets.GITHUB_TOKEN }}
+      #- name: Create CVE report
+      #  uses: docker/scout-action@ca09af31fdb99995a36608d63aba7b5e4f66709a
+      #  with:
+      #    command: cves
+      #    image: ${{ steps.meta.outputs.tags }}
+      #    args: '--output image.sarif.json --format sarif' 
+      #    user: ${{ secrets.DOCKER_HUB_USER }}
+      #    password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      #    registry_user: ${{ github.actor }}
+      #    registry_password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          # Path to SARIF file relative to the root of the repository
-          sarif_file: image.sarif.json     
+      #- name: Upload SARIF file
+      #  uses: github/codeql-action/upload-sarif@v2
+      #  with:
+      #    # Path to SARIF file relative to the root of the repository
+      #    sarif_file: image.sarif.json     
           
           
           
