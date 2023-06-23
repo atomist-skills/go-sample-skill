@@ -45,7 +45,6 @@ jobs:
           buildkitd-flags: --debug
           driver-opts: |
             image=atomist/buildkit:v1
-            network=host
             env.ACTIONS_ID_TOKEN_REQUEST_URL=${{ env.ACTIONS_ID_TOKEN_REQUEST_URL }}
             env.ACTIONS_ID_TOKEN_REQUEST_TOKEN=${{ env.ACTIONS_ID_TOKEN_REQUEST_TOKEN }}
 
