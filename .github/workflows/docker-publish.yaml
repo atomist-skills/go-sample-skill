@@ -20,6 +20,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      # needed to be able to set audience in ID token
       id-token: write
 
     steps:
