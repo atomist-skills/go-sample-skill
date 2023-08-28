@@ -2,7 +2,7 @@
 
 Simple skill showing how to subscribe to and transact new data written in Go.
 
-## Files 
+## Files  
  
 | File                                                                       | Description                                    |
 | -------------------------------------------------------------------------- | ---------------------------------------------- |
