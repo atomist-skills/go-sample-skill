@@ -3,7 +3,7 @@
 Simple skill showing how to subscribe to and transact new data written in Go.
 
 ## Files
-
+ 
 | File                                                                       | Description                                    |
 | -------------------------------------------------------------------------- | ---------------------------------------------- |
 | [datalog/schema/commit_signature.edn](datalog/schema/commit_signature.edn) | Datalog schema defining Commit signature facts |
