@@ -16,7 +16,7 @@ Simple skill showing how to subscribe to and transact new data written in Go.
 | [skill.yaml](skill.yaml)                                                   | Skill descriptor (metadata and parameters etc) |
 
 ## Contributing
-
+ 
 Contributions to this project from community members are encouraged and
 appreciated. Please review the [Contributing Guidelines](CONTRIBUTING.md) for
 more information. Also see the [Development](#development) section in this
